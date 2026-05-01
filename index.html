@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Калькулятор — xlplitka.pro</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;min-height:100vh}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* ── HOME SCREEN ── */
+.home-header{background:#fff;border-bottom:1px solid #e0e0de;padding:16px 16px 12px;position:sticky;top:0;z-index:10}
+.home-brand{font-size:11px;font-weight:700;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.btn-new{width:100%;padding:12px;background:#111;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer}
+.btn-new:hover{background:#333}
+.home-list{padding:14px}
+.home-empty{text-align:center;padding:60px 20px;color:#ccc;font-size:13px}
+.smeta-card{background:#fff;border:1px solid #e8e8e6;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .15s}
+.smeta-card:hover{border-color:#aaa}
+.sc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.sc-name{font-size:14px;font-weight:700;color:#111}
+.sc-obj{font-size:12px;color:#888;margin-bottom:4px}
+.sc-meta{display:flex;gap:10px;align-items:center}
+.sc-date{font-size:11px;color:#bbb}
+.sc-op{font-size:11px;padding:2px 7px;border-radius:20px;font-weight:600}
+.sc-op.ak{background:#e8f0fe;color:#1a73e8}
+.sc-op.xl{background:#111;color:#fff}
+.sc-total{font-size:15px;font-weight:700;color:#111;white-space:nowrap}
+.sc-zones{font-size:11px;color:#bbb;margin-top:4px}
+.sc-del{background:none;border:none;color:#ddd;font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0}
+.sc-del:hover{color:#e44}
+
+/* ── OPERATOR MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:24px;max-width:340px;width:100%}
+.modal h2{font-size:16px;font-weight:700;margin-bottom:5px}
+.modal p{font-size:12px;color:#999;margin-bottom:16px;line-height:1.5}
+.op-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:2px solid #e0e0de;border-radius:10px;background:#fff;cursor:pointer;margin-bottom:8px;transition:all .15s;text-align:left}
+.op-btn:hover{border-color:#999}
+.op-btn.selected{border-color:#111;background:#fafaf8}
+.op-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.op-icon.ak{background:#e8f0fe;color:#1a73e8}
+.op-icon.xl{background:#111;color:#fff}
+.op-name{font-size:13px;font-weight:700;color:#111}
+.op-sub{font-size:11px;color:#aaa;margin-top:1px}
+.modal-confirm{width:100%;padding:11px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:14px}
+.modal-confirm:disabled{background:#ccc;cursor:not-allowed}
+.modal-cancel{width:100%;padding:9px;background:transparent;border:1px solid #ddd;border-radius:8px;font-size:13px;color:#888;cursor:pointer;margin-top:7px}
+
+/* ── EDITOR SCREEN ── */
+.editor-topbar{background:#fff;border-bottom:1px solid #e0e0de;padding:10px 14px;position:sticky;top:0;z-index:10}
+.editor-topbar-row1{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.btn-back{background:none;border:none;font-size:20px;cursor:pointer;color:#555;padding:0 4px 0 0;line-height:1}
+.editor-title{flex:1;font-size:14px;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.op-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #ddd;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;white-space:nowrap}
+.op-pill:hover{background:#f5f5f3}
+.op-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.op-dot.ak{background:#1a73e8}
+.op-dot.xl{background:#111}
+.obj-row{display:flex;gap:6px}
+.obj-row input{flex:1;padding:7px 9px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;color:#111;min-width:0}
+.obj-row input:focus{outline:none;border-color:#999}
+
+/* editor tabs */
+.etabbar{display:flex;background:#fff;border-bottom:1px solid #e0e0de;position:sticky;top:69px;z-index:9}
+.etab{flex:1;padding:10px 8px;text-align:center;font-size:13px;font-weight:600;color:#aaa;cursor:pointer;border-bottom:3px solid transparent}
+.etab.active{color:#111;border-bottom-color:#111}
+.badge{display:inline-flex;align-items:center;justify-content:center;background:#111;color:#fff;border-radius:99px;font-size:10px;font-weight:700;min-width:16px;height:16px;padding:0 4px;margin-left:4px;vertical-align:middle}
+.badge.hidden{display:none}
+.epage{display:none;flex-direction:column}
+.epage.active{display:flex}
+
+/* zone bar */
+.zone-bar{background:#fff;border-bottom:1px solid #e0e0de;padding:10px 14px}
+.zone-bar-label{font-size:10px;font-weight:700;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.zone-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:28px;align-items:center}
+.ztab{padding:5px 11px;border:1px solid #ddd;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;color:#555;display:flex;align-items:center;gap:4px}
+.ztab.active{background:#111;color:#fff;border-color:#111}
+.zdel{background:none;border:none;color:inherit;cursor:pointer;font-size:13px;line-height:1;padding:0;opacity:.6}
+.zone-add-row{display:flex;gap:6px}
+.zone-add-row input{flex:1;padding:7px 9px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;color:#111}
+.zone-add-row input:focus{outline:none;border-color:#999}
+.btn-zone{padding:7px 12px;background:#111;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+
+/* search + catalog */
+.search-wrap{padding:10px 14px;background:#f4f4f2}
+.search-inner{position:relative}
+.search-inner input{width:100%;padding:8px 12px 8px 34px;border:1px solid #ddd;border-radius:8px;font-size:13px;background:#fff;color:#111}
+.search-inner input:focus{outline:none;border-color:#999}
+.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#bbb;font-size:13px;pointer-events:none}
+.catalog-wrap{padding:0 14px 10px}
+.sec-head{font-size:10px;font-weight:700;color:#aaa;letter-spacing:.1em;text-transform:uppercase;padding:10px 0 5px}
+.item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border:1px solid #eee;border-radius:8px;margin-bottom:5px}
+.iname{flex:1;font-size:13px;color:#222;line-height:1.3}
+.imeta{display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0;margin-right:4px}
+.iunit{font-size:10px;color:#bbb}
+.iprice{font-size:12px;font-weight:700;color:#333;white-space:nowrap}
+.iprice2{font-size:10px;color:#ccc;text-decoration:line-through;white-space:nowrap}
+.iadd{padding:6px 13px;font-size:13px;font-weight:700;border:1px solid #ddd;border-radius:6px;background:#fff;color:#333;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.iadd:active{background:#eee}
+.iadd.no-zone{opacity:.3;pointer-events:none}
+
+/* custom */
+.custom-wrap{padding:0 14px 16px}
+.custom-box{background:#fff;border:1px solid #e0e0de;border-radius:10px;padding:12px}
+.custom-label{font-size:10px;font-weight:700;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.cf{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.cf input{padding:8px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;color:#111;width:100%}
+.cf input:focus{outline:none;border-color:#999}
+.cf .r2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn-custom{width:100%;padding:10px;background:#111;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-custom.no-zone{background:#ccc;pointer-events:none}
+
+/* summary */
+.summary-content{padding:10px 14px 0}
+.empty{text-align:center;padding:40px 0;color:#ccc;font-size:13px}
+.zone-section{margin-bottom:12px}
+.zone-head{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#e8e8e6;border-radius:7px;margin-bottom:5px}
+.zone-head-name{font-size:11px;font-weight:700;color:#444;letter-spacing:.06em;text-transform:uppercase}
+.zone-head-total{font-size:12px;font-weight:700;color:#666}
+.sel-item{background:#fff;border:1px solid #eee;border-radius:8px;padding:9px 10px;margin-bottom:5px}
+.sel-top{display:flex;align-items:flex-start;gap:6px;margin-bottom:7px}
+.sel-name{flex:1;font-size:13px;color:#222;line-height:1.3}
+.del{background:none;border:none;color:#ccc;cursor:pointer;font-size:18px;line-height:1;padding:0;flex-shrink:0}
+.sel-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;align-items:end}
+.sel-col{display:flex;flex-direction:column;gap:3px}
+.sel-col label{font-size:10px;color:#bbb}
+.sel-col input{padding:6px 8px;border:1px solid #ddd;border-radius:6px;font-size:13px;text-align:center;background:#fff;color:#111;width:100%}
+.sel-col input:focus{outline:none;border-color:#999}
+.sel-sum{font-size:14px;font-weight:700;color:#111;text-align:right;white-space:nowrap;padding-bottom:1px}
+
+/* bottom bar */
+.bottom-bar{background:#fff;border-top:1px solid #e0e0de;padding:12px 14px;position:sticky;bottom:0;z-index:8}
+.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.total-label{font-size:13px;color:#888}
+.total-val{font-size:24px;font-weight:700;color:#111}
+.action-btns{display:flex;flex-direction:column;gap:7px}
+.btn-pdf{padding:12px;background:#111;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;width:100%}
+.btn-pdf:hover{background:#333}
+.btn-save{padding:9px;background:transparent;border:1px solid #ddd;border-radius:9px;font-size:13px;color:#555;cursor:pointer;width:100%}
+.btn-save:hover{background:#f5f5f3}
+
+/* autosave indicator */
+.autosave{font-size:11px;color:#bbb;text-align:center;padding:4px 0 0}
+
+@media(min-width:800px){
+  .epage-wrap{display:grid;grid-template-columns:1fr 420px}
+  .epage{display:flex!important}
+  .epage#ep-summary{border-left:1px solid #e0e0de;min-height:60vh}
+  .etabbar{display:none}
+  .bottom-bar{position:sticky;bottom:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HOME SCREEN ══════════ -->
+<div class="screen active" id="screen-home">
+  <div class="home-header">
+    <div class="home-brand">xlplitka.pro — Калькулятор</div>
+    <button class="btn-new" onclick="newSmeta()">+ Новий кошторис</button>
+  </div>
+  <div class="home-list" id="home-list">
+    <div class="home-empty" id="home-empty">Кошторисів ще немає.<br>Натисніть «+ Новий кошторис»</div>
+  </div>
+</div>
+
+<!-- ══════════ EDITOR SCREEN ══════════ -->
+<div class="screen" id="screen-editor">
+  <div class="editor-topbar">
+    <div class="editor-topbar-row1">
+      <button class="btn-back" onclick="goHome()">&#8592;</button>
+      <span class="editor-title" id="editor-title">Новий кошторис</span>
+      <div class="op-pill" onclick="openOpModal()" id="op-pill">
+        <div class="op-dot" id="op-dot"></div>
+        <span id="op-label">Оператор</span>
+        <span style="color:#bbb;font-size:10px">&#9998;</span>
+      </div>
+    </div>
+    <div class="obj-row">
+      <input id="clientName" placeholder="Ім'я клієнта" oninput="autoSave()" />
+      <input id="clientObj" placeholder="Об'єкт / адреса" oninput="autoSave()" />
+    </div>
+  </div>
+
+  <div class="etabbar">
+    <div class="etab active" id="etab-catalog" onclick="showEPage('catalog')">Каталог</div>
+    <div class="etab" id="etab-summary" onclick="showEPage('summary')">Кошторис <span class="badge hidden" id="badge">0</span></div>
+  </div>
+
+  <div class="epage-wrap">
+    <!-- Catalog tab -->
+    <div class="epage active" id="ep-catalog">
+      <div class="zone-bar">
+        <div class="zone-bar-label">Ділянки об'єкта</div>
+        <div class="zone-tabs" id="zone-tabs"><span style="font-size:12px;color:#ccc">Додайте ділянку</span></div>
+        <div class="zone-add-row">
+          <input id="zoneInput" placeholder="Санвузол, Коридор, Кухня..." onkeydown="if(event.key==='Enter')addZone()" />
+          <button class="btn-zone" onclick="addZone()">+ Додати</button>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="search-inner">
+          <span class="si">&#128269;</span>
+          <input id="search" placeholder="Пошук роботи..." oninput="renderCatalog()" />
+        </div>
+      </div>
+      <div class="catalog-wrap" id="catalog"></div>
+      <div class="custom-wrap">
+        <div class="custom-box">
+          <div class="custom-label">+ Інше — власна позиція</div>
+          <div class="cf">
+            <input id="cName" placeholder="Назва роботи" />
+            <div class="r2">
+              <input id="cQty" placeholder="Кількість" type="number" min="0" step="0.01" />
+              <input id="cPrice" placeholder="Ціна, грн" type="number" min="0" />
+            </div>
+          </div>
+          <button class="btn-custom" id="btn-custom" onclick="addCustom()">Зробити розрахунок</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary tab -->
+    <div class="epage" id="ep-summary">
+      <div class="summary-content" id="sel-list">
+        <div class="empty">Додайте ділянки та оберіть роботи</div>
+      </div>
+      <div class="bottom-bar">
+        <div class="total-row">
+          <span class="total-label">Загальна сума</span>
+          <span class="total-val" id="total">0 грн</span>
+        </div>
+        <div class="action-btns">
+          <button class="btn-pdf" onclick="generatePDF()">&#128196; Відкрити кошторис для друку</button>
+          <button class="btn-save" onclick="manualSave()">&#128190; Зберегти зміни</button>
+        </div>
+        <div class="autosave" id="autosave-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ OPERATOR MODAL ══════════ -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2>Оберіть оператора</h2>
+    <p>Ціни перераховуються автоматично при зміні</p>
+    <div class="op-btn" id="ob-ak" onclick="selectOp('ak')">
+      <div class="op-icon ak">А</div>
+      <div><div class="op-name">Андрій Калинник</div><div class="op-sub">Вартість 1</div></div>
+    </div>
+    <div class="op-btn" id="ob-xl" onclick="selectOp('xl')">
+      <div class="op-icon xl">X</div>
+      <div><div class="op-name">xlplitka.pro</div><div class="op-sub">Вартість 2</div></div>
+    </div>
+    <button class="modal-confirm" id="modal-confirm" onclick="confirmOp()" disabled>Підтвердити</button>
+    <button class="modal-cancel" id="modal-cancel" onclick="closeModal()">Скасувати</button>
+  </div>
+</div>
+
+<script>
+const CAT=[
+  {s:"Організаційні послуги",items:[
+    {n:"Виїзд для прорахунку вартості робіт",u:"шт.",p:[1000,1000]},
+    {n:"Обсяг замовлення менше 25 м кв.",u:"коеф.",p:[1.3,1.3]},
+    {n:"Виїзд спеціаліста для консультації",u:"шт.",p:[1000,1000]},
+    {n:"Транспортні витрати за містом",u:"км",p:[15,15]},
+    {n:"Підняття широкоформатної плитки по сходах",u:"поверх",p:[500,500]},
+    {n:"Підняття матеріалу по сходах / ліфт",u:"договірна",p:[0,0]},
+    {n:"Розвантаження матеріалу",u:"тона",p:[0,0]},
+  ]},
+  {s:"Підготовчі роботи",items:[
+    {n:"Демонтаж старого покриття стяжка, плитки",u:"м²",p:[370,300]},
+    {n:"Чистка від напливів, знепилення поверхні",u:"м²",p:[50,50]},
+    {n:"Грунтовка глибокопроникна",u:"м²",p:[35,40]},
+    {n:"Шліфування, видалення слабкого шару",u:"м²",p:[150,200]},
+    {n:"Монтаж системи Maretex (мембрана)",u:"м²",p:[230,250]},
+    {n:"Стяжка, наливна підлога",u:"м²",p:[300,380]},
+    {n:"Монтаж демпферної стрічки",u:"м.п.",p:[70,70]},
+    {n:"Заміна затирки швів",u:"м²",p:[400,450]},
+    {n:"Заливання теплої підлоги нівеліром або клеєм",u:"м²",p:[300,350]},
+    {n:"Стяжка маякова цементно-піщана до 60 мм",u:"м²",p:[400,450]},
+    {n:"Нанесення гребінки клею під штукатурку / стяжку",u:"м²",p:[170,180]},
+    {n:"Закладення штроб",u:"м.п.",p:[140,150]},
+    {n:"Закладення сантехнічних штроб",u:"м.п.",p:[240,250]},
+    {n:"Влаштування цементної гідроізоляції",u:"м²",p:[170,220]},
+    {n:"Нанесення однокомпонентної гідроізоляції",u:"м²",p:[200,250]},
+    {n:"Нанесення двокомпонентної гідроізоляції",u:"м²",p:[380,400]},
+    {n:"Армування кутів гідроізоляційною стрічкою",u:"м.п.",p:[100,140]},
+    {n:"Армування сантехвиходів гідроманжетами",u:"шт.",p:[250,250]},
+    {n:"Монтаж ГКЛ на інсталяцію",u:"м.п.",p:[2000,2500]},
+    {n:"Монтаж погонних елементів ГКЛ",u:"м.п.",p:[500,550]},
+    {n:"Монтаж фальшстіни ГКЛ в 1 шар",u:"м²",p:[500,550]},
+    {n:"Монтаж додаткового шару гіпсокартону",u:"м²",p:[150,230]},
+    {n:"Збірка каркасу під ГКЛ, метал",u:"м²",p:[350,380]},
+    {n:"Виріз отвору в гіпсокартоні",u:"шт.",p:[85,85]},
+    {n:"Устройство панелі під ванну (ГКЛ, цегла, піноблок)",u:"м.п.",p:[2600,2600]},
+    {n:"Монтаж екрана під ванну ГКЛ з нішею під ноги",u:"м.п.",p:[2950,2950]},
+    {n:"Монтаж прихованого люка ревізії до 450 мм",u:"шт.",p:[1500,1500]},
+    {n:"Монтаж прихованого люка ревізії до 600 мм",u:"шт.",p:[2000,2200]},
+    {n:"Захисне укриття плитки (ДВП, картон, міреплон)",u:"м²",p:[50,60]},
+    {n:"Монтаж електричної теплої підлоги (мат)",u:"м²",p:[350,500]},
+    {n:"Штроба під теплу підлогу + укладка кабеля",u:"м.п.",p:[150,180]},
+    {n:"Встановлення ванни з пропінкою, віброізоляція",u:"шт.",p:[3800,3800]},
+    {n:"Опуск дверного прорізу",u:"шт.",p:[350,450]},
+    {n:"Монтаж штукатурної сітки / армування",u:"м²",p:[140,180]},
+    {n:"Встановлення підрозетників",u:"шт.",p:[100,100]},
+    {n:"Шумоізоляція стояка каналізації",u:"м.п.",p:[700,750]},
+    {n:"Затягування клеєм над плиткою під натяжні стелі",u:"м.п.",p:[220,280]},
+    {n:"Монтаж компенсаційного анкера на епоксидний розчин",u:"шт.",p:[250,250]},
+    {n:"Обклеювання малярною стрічкою",u:"м.п.",p:[40,50]},
+    {n:"Встановлення лінійного трапу",u:"шт.",p:[1500,1800]},
+  ]},
+  {s:"Оброблення плитки та вироби",items:[
+    {n:"Облицювання екрана ванни прямого",u:"м.п.",p:[1650,1800]},
+    {n:"Обліцовка сходини прямої",u:"м.п.",p:[1250,1350]},
+    {n:"Обліцовка та виготовлення ніші в екрані ванни для LED",u:"м.п.",p:[1000,1000]},
+    {n:"Виріз отворів до 70 мм",u:"шт.",p:[250,275]},
+    {n:"Виріз отворів більше 70 мм",u:"шт.",p:[350,375]},
+    {n:"Виріз складних отворів прямокутних більше 90 мм",u:"шт.",p:[850,1000]},
+    {n:"Різ плитки під 45° заусовка, кераміка / керамограніт",u:"м.п.",p:[350,470]},
+    {n:"Різ плитки під 90° зі шліфуванням (чистовий)",u:"м.п.",p:[300,350]},
+    {n:"Різ плитки під 90° (чорновий)",u:"м.п.",p:[150,165]},
+    {n:"Різ під 45° кабанчик",u:"м.п.",p:[500,550]},
+    {n:"Різ під 90° кабанчик",u:"м.п.",p:[380,420]},
+    {n:"Затирка швів кабанчик",u:"м.п.",p:[550,600]},
+    {n:"Виготовлення вентиляції прихованого монтажу",u:"шт.",p:[4400,4800]},
+    {n:"Виготовлення раковини з керамограніту",u:"шт.",p:[500,500]},
+    {n:"Виготовлення душового піддону 900x900 мм",u:"шт.",p:[10000,15000]},
+    {n:"Виготовлення душового піддону 900x1200 мм",u:"шт.",p:[14000,20000]},
+    {n:"Заливання подіума для ванної",u:"шт.",p:[3800,4000]},
+    {n:"Виготовлення поличок з плитки до 600 мм",u:"шт.",p:[2000,2800]},
+    {n:"Заповнення швів цементною сумішшю",u:"м²",p:[200,220]},
+    {n:"Формування зовнішнього кута з цементної затирки",u:"м.п.",p:[250,285]},
+    {n:"Герметизація швів силіконом",u:"м.п.",p:[150,180]},
+    {n:"Установка поліетиленового шнура",u:"м.п.",p:[200,220]},
+    {n:"Заповнення швів епоксидною сумішшю",u:"м²",p:[250,300]},
+    {n:"Заповнення швів епоксидною сумішшю (малий формат)",u:"м²",p:[500,600]},
+    {n:"Формування зовнішнього кута з епоксидної суміші",u:"м.п.",p:[350,375]},
+  ]},
+  {s:"Укладання плитки",items:[
+    {n:"Підбір малюнка",u:"м²",p:[100,100]},
+    {n:"Укладання малоформатної плитки 50-250 мм (кабанчик)",u:"м²",p:[1800,2000]},
+    {n:"Укладання плитки 300x300 мм",u:"м²",p:[650,700]},
+    {n:"Укладання плитки 300x600 мм",u:"м²",p:[650,700]},
+    {n:"Укладання плитки 300x900 мм",u:"м²",p:[700,750]},
+    {n:"Укладання плитки 600x600 мм",u:"м²",p:[730,850]},
+    {n:"Укладання плитки 600x1200 мм",u:"м²",p:[850,950]},
+    {n:"Укладання плитки 200x1200 мм",u:"м²",p:[950,1050]},
+    {n:"Укладання плитки 400x1200 мм",u:"м²",p:[990,1075]},
+    {n:"Укладання плитки 600x1800 мм",u:"м²",p:[980,1075]},
+    {n:"Укладання плитки 900x1800 мм",u:"м²",p:[1450,1600]},
+    {n:"Укладання плитки 800x800 мм",u:"м²",p:[900,1050]},
+    {n:"Укладання плитки 800x1600 мм",u:"м²",p:[1200,1350]},
+    {n:"Укладання плитки 1000x1000 мм",u:"м²",p:[1100,1200]},
+    {n:"Укладання плитки кабанчик, під цеглу",u:"м²",p:[1800,2000]},
+    {n:"Укладання дошки до 900 мм",u:"м²",p:[950,1100]},
+    {n:"Укладання дошки до 1200 мм",u:"м²",p:[950,1250]},
+    {n:"Укладання дошки до 1800 мм",u:"м²",p:[1300,1500]},
+    {n:"Укладання по діагоналі / ялинкою / зі вставками",u:"коеф.",p:[1.25,1.25]},
+    {n:"Укладка керамограніту товщиною 20-30 мм",u:"м²",p:[1600,1750]},
+    {n:"Укладка мозаїки",u:"м²",p:[2000,2500]},
+  ]},
+  {s:"Укладання широкоформатної плитки",items:[
+    {n:"Підняття плитки великого формату",u:"поверх",p:[400,400]},
+    {n:"Укладання плитки 1200x1200 мм",u:"м²",p:[1200,1400]},
+    {n:"Укладання плитки 1500x750 мм",u:"м²",p:[1300,1500]},
+    {n:"Укладання плитки 1600x1600 мм",u:"м²",p:[1550,1700]},
+    {n:"Укладання плитки 1000x2000 мм",u:"м²",p:[1550,1800]},
+    {n:"Укладання плитки 1000x2500 мм",u:"м²",p:[1650,1900]},
+    {n:"Укладання плитки 1200x2400 мм",u:"м²",p:[1800,2200]},
+    {n:"Укладання плитки 1200x2600 мм",u:"м²",p:[1800,2300]},
+    {n:"Укладання плитки 1200x2800 мм",u:"м²",p:[1800,2450]},
+    {n:"Укладання плитки 1000x3000 мм",u:"м²",p:[2100,2600]},
+    {n:"Укладання плитки 1200x3200 мм",u:"м²",p:[2100,2650]},
+    {n:"Укладання плитки 1500x3000 мм",u:"м²",p:[2100,2800]},
+    {n:"Укладання плитки 1600x3200 мм",u:"м²",p:[2100,2900]},
+    {n:"Виготовлення душового піддону КФ без борту 900x900 мм",u:"шт.",p:[350,550]},
+    {n:"Виготовлення душового піддону КФ з бортом 900x900 мм",u:"шт.",p:[400,650]},
+    {n:"Поріз плит під 90° великого формату, шліфовка країв",u:"м.п.",p:[350,450]},
+    {n:"Заріз під 45° заусовка однієї сторони",u:"м.п.",p:[500,550]},
+    {n:"Виріз отвору в плиті великого формату",u:"шт.",p:[350,380]},
+    {n:"Складний виріз отвору прямокутний",u:"шт.",p:[1300,1400]},
+    {n:"Затирання швів епоксидною сумішшю",u:"м.п.",p:[250,300]},
+  ]},
+];
+
+const OPS={
+  ak:{name:"Андрій Калинник",sub:"Вартість 1",idx:0,cls:"ak"},
+  xl:{name:"xlplitka.pro",sub:"Вартість 2",idx:1,cls:"xl"},
+};
+
+// ── STATE ──
+let currentOp=null, pendingOp=null;
+let zones=[], items=[], activeZone=null;
+let currentSmetaId=null;
+let idCnt=1;
+let autoSaveTimer=null;
+
+// ── STORAGE ──
+function loadHistory(){
+  try{ return JSON.parse(localStorage.getItem('xlp_smety')||'[]'); }
+  catch(e){ return []; }
+}
+function saveHistory(list){
+  localStorage.setItem('xlp_smety', JSON.stringify(list));
+}
+function saveCurrent(){
+  if(!currentSmetaId) return;
+  const list=loadHistory();
+  const idx=list.findIndex(s=>s.id===currentSmetaId);
+  const client=document.getElementById('clientName').value||'';
+  const obj=document.getElementById('clientObj').value||'';
+  const total=Math.round(items.reduce((a,i)=>a+i.p*i.qty,0));
+  const record={
+    id:currentSmetaId,
+    client,obj,
+    op:currentOp,
+    total,
+    zones:[...zones],
+    items:JSON.parse(JSON.stringify(items)),
+    idCnt,
+    updatedAt:new Date().toISOString(),
+    createdAt: idx>=0 ? list[idx].createdAt : new Date().toISOString(),
+  };
+  if(idx>=0) list[idx]=record;
+  else list.unshift(record);
+  saveHistory(list);
+}
+
+function autoSave(){
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer=setTimeout(()=>{
+    saveCurrent();
+    const el=document.getElementById('autosave-status');
+    el.textContent='Збережено '+new Date().toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});
+    setTimeout(()=>el.textContent='',3000);
+  },800);
+}
+
+function manualSave(){
+  saveCurrent();
+  const el=document.getElementById('autosave-status');
+  el.textContent='✓ Збережено';
+  setTimeout(()=>el.textContent='',2000);
+}
+
+// ── HOME ──
+function renderHome(){
+  const list=loadHistory();
+  const box=document.getElementById('home-list');
+  const empty=document.getElementById('home-empty');
+  if(!list.length){
+    empty.style.display='block';
+    box.innerHTML='';
+    box.appendChild(empty);
+    return;
+  }
+  empty.style.display='none';
+  box.innerHTML=list.map(s=>{
+    const date=new Date(s.updatedAt).toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const opCls=s.op||'';
+    const opName=s.op?OPS[s.op].name:'—';
+    const zoneNames=s.zones.map(z=>z.name).join(', ')||'—';
+    return `<div class="smeta-card" onclick="openSmeta('${s.id}')">
+      <div class="sc-top">
+        <div>
+          <div class="sc-name">${s.client||'Без імені'}</div>
+          <div class="sc-obj">${s.obj||'Об\'єкт не вказано'}</div>
+        </div>
+        <span class="sc-total">${s.total.toLocaleString('uk')} грн</span>
+      </div>
+      <div class="sc-meta">
+        <span class="sc-op ${opCls}">${opName}</span>
+        <span class="sc-date">${date}</span>
+        <button class="sc-del" onclick="event.stopPropagation();deleteSmeta('${s.id}')">&#215;</button>
+      </div>
+      <div class="sc-zones">&#128205; ${zoneNames}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteSmeta(id){
+  if(!confirm('Видалити кошторис?')) return;
+  const list=loadHistory().filter(s=>s.id!==id);
+  saveHistory(list);
+  renderHome();
+}
+
+// ── NEW / OPEN ──
+function newSmeta(){
+  currentSmetaId='xlp_'+Date.now();
+  currentOp=null; pendingOp=null;
+  zones=[]; items=[]; activeZone=null; idCnt=1;
+  document.getElementById('clientName').value='';
+  document.getElementById('clientObj').value='';
+  document.getElementById('autosave-status').textContent='';
+  showScreen('editor');
+  renderZoneTabs(); renderCatalog(); renderSummary(); updateCustomBtn(); updateBadge();
+  // Show operator modal immediately
+  pendingOp=null;
+  document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('modal-confirm').disabled=true;
+  document.getElementById('modal-cancel').style.display='none';
+  document.getElementById('modal').classList.add('open');
+}
+
+function openSmeta(id){
+  const list=loadHistory();
+  const s=list.find(x=>x.id===id);
+  if(!s) return;
+  currentSmetaId=id;
+  currentOp=s.op;
+  zones=s.zones||[];
+  items=s.items||[];
+  idCnt=s.idCnt||1;
+  activeZone=zones.length?zones[zones.length-1].id:null;
+  document.getElementById('clientName').value=s.client||'';
+  document.getElementById('clientObj').value=s.obj||'';
+  document.getElementById('autosave-status').textContent='';
+  showScreen('editor');
+  updateOpPill();
+  renderZoneTabs(); renderCatalog(); renderSummary(); updateCustomBtn(); updateBadge();
+}
+
+function goHome(){
+  saveCurrent();
+  showScreen('home');
+  renderHome();
+}
+
+// ── SCREENS ──
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+function showEPage(name){
+  document.querySelectorAll('.epage').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ep-'+name).classList.add('active');
+  document.getElementById('etab-'+name).classList.add('active');
+}
+
+// ── OPERATOR ──
+function selectOp(op){
+  pendingOp=op;
+  document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('ob-'+op).classList.add('selected');
+  document.getElementById('modal-confirm').disabled=false;
+}
+
+function confirmOp(){
+  if(!pendingOp) return;
+  const prev=currentOp;
+  currentOp=pendingOp;
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-cancel').style.display='';
+  updateOpPill();
+  if(prev && prev!==currentOp && items.length){
+    for(const it of items){
+      if(it.custom) continue;
+      const found=findCatalogItem(it.n);
+      if(found) it.p=found.p[OPS[currentOp].idx];
+    }
+    renderSummary();
+  }
+  renderCatalog();
+  autoSave();
+}
+
+function closeModal(){
+  if(!currentOp) return; // can't close without selecting
+  document.getElementById('modal').classList.remove('open');
+}
+
+function openOpModal(){
+  pendingOp=currentOp;
+  document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected'));
+  if(currentOp) document.getElementById('ob-'+currentOp).classList.add('selected');
+  document.getElementById('modal-confirm').disabled=!currentOp;
+  document.getElementById('modal-cancel').style.display='';
+  document.getElementById('modal').classList.add('open');
+}
+
+function updateOpPill(){
+  if(!currentOp) return;
+  const o=OPS[currentOp];
+  document.getElementById('op-dot').className='op-dot '+o.cls;
+  document.getElementById('op-label').textContent=o.name;
+  document.getElementById('editor-title').textContent=
+    document.getElementById('clientName').value||'Новий кошторис';
+}
+
+function findCatalogItem(name){
+  for(const sec of CAT) for(const it of sec.items) if(it.n===name) return it;
+  return null;
+}
+
+// ── ZONES ──
+function addZone(){
+  const inp=document.getElementById('zoneInput');
+  const name=inp.value.trim();
+  if(!name){inp.focus();return;}
+  const id=idCnt++;
+  zones.push({id,name});
+  inp.value='';
+  setActiveZone(id);
+  renderZoneTabs(); renderSummary();
+  autoSave();
+}
+
+function removeZone(id){
+  if(!confirm('Видалити ділянку разом з усіма позиціями?'))return;
+  zones=zones.filter(z=>z.id!==id);
+  items=items.filter(i=>i.zoneId!==id);
+  if(activeZone===id) activeZone=zones.length?zones[zones.length-1].id:null;
+  renderZoneTabs(); renderCatalog(); renderSummary(); updateCustomBtn();
+  autoSave();
+}
+
+function setActiveZone(id){
+  activeZone=id;
+  renderZoneTabs(); renderCatalog(); updateCustomBtn();
+}
+
+function renderZoneTabs(){
+  const box=document.getElementById('zone-tabs');
+  if(!zones.length){box.innerHTML='<span style="font-size:12px;color:#ccc">Додайте ділянку</span>';return;}
+  box.innerHTML=zones.map(z=>`<div class="ztab ${z.id===activeZone?'active':''}" onclick="setActiveZone(${z.id})">${z.name}<button class="zdel" onclick="event.stopPropagation();removeZone(${z.id})">&#215;</button></div>`).join('');
+}
+
+function updateCustomBtn(){
+  document.getElementById('btn-custom').classList.toggle('no-zone',!activeZone);
+}
+
+// ── CATALOG ──
+function renderCatalog(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const box=document.getElementById('catalog');
+  if(!currentOp){box.innerHTML='<div style="padding:24px;text-align:center;color:#ccc;font-size:13px">Оберіть оператора</div>';return;}
+  const hasZone=!!activeZone;
+  const idx=OPS[currentOp].idx;
+  const other=idx===0?1:0;
+  let html='';
+  for(const sec of CAT){
+    const filtered=sec.items.filter(i=>!q||i.n.toLowerCase().includes(q));
+    if(!filtered.length) continue;
+    html+=`<div class="sec-head">${sec.s}</div>`;
+    for(const it of filtered){
+      const pr=it.p[idx],pr2=it.p[other];
+      const ps=pr>0?pr.toLocaleString('uk')+' грн':'договірна';
+      const ps2=pr2>0&&pr2!==pr?pr2.toLocaleString('uk')+' грн':'';
+      html+=`<div class="item"><span class="iname">${it.n}</span><div class="imeta"><span class="iunit">${it.u}</span><span class="iprice">${ps}</span>${ps2?`<span class="iprice2">${ps2}</span>`:''}</div><button class="iadd${hasZone?'':' no-zone'}" onclick='addItem(${JSON.stringify(it)})'>+ Додати</button></div>`;
+    }
+  }
+  if(!html) html='<div style="padding:20px;text-align:center;color:#ccc;font-size:13px">Нічого не знайдено</div>';
+  box.innerHTML=html;
+}
+
+// ── ITEMS ──
+function addItem(it){
+  if(!currentOp){openOpModal();return;}
+  if(!activeZone){alert('Оберіть ділянку');return;}
+  const price=it.p[OPS[currentOp].idx];
+  const ex=items.find(i=>i.zoneId===activeZone&&i.n===it.n);
+  if(ex){ex.qty++;}
+  else{items.push({id:idCnt++,zoneId:activeZone,n:it.n,u:it.u,p:price,qty:1,custom:false});}
+  updateBadge(); renderSummary(); autoSave();
+}
+
+function addCustom(){
+  if(!activeZone){alert('Оберіть ділянку');return;}
+  const n=document.getElementById('cName').value.trim();
+  const qty=parseFloat(document.getElementById('cQty').value)||1;
+  const p=parseFloat(document.getElementById('cPrice').value)||0;
+  if(!n){document.getElementById('cName').focus();return;}
+  items.push({id:idCnt++,zoneId:activeZone,n,u:'шт.',p,qty,custom:true});
+  document.getElementById('cName').value='';
+  document.getElementById('cQty').value='';
+  document.getElementById('cPrice').value='';
+  updateBadge(); renderSummary(); autoSave();
+}
+
+function removeItem(id){
+  items=items.filter(i=>i.id!==id);
+  updateBadge(); renderSummary(); autoSave();
+}
+
+function updateField(id,field,val){
+  const it=items.find(i=>i.id===id);
+  if(!it) return;
+  it[field]=parseFloat(val)||0;
+  const el=document.getElementById('sum_'+id);
+  if(el) el.textContent=Math.round(it.p*it.qty).toLocaleString('uk')+' грн';
+  const zel=document.getElementById('ztotal_'+it.zoneId);
+  if(zel){const zt=items.filter(i=>i.zoneId===it.zoneId).reduce((a,i)=>a+i.p*i.qty,0);zel.textContent=Math.round(zt).toLocaleString('uk')+' грн';}
+  document.getElementById('total').textContent=Math.round(items.reduce((a,i)=>a+i.p*i.qty,0)).toLocaleString('uk')+' грн';
+  autoSave();
+}
+
+function updateBadge(){
+  const b=document.getElementById('badge');
+  if(items.length){b.textContent=items.length;b.classList.remove('hidden');}
+  else b.classList.add('hidden');
+}
+
+function renderSummary(){
+  const box=document.getElementById('sel-list');
+  if(!items.length){box.innerHTML='<div class="empty">Додайте ділянки та оберіть роботи</div>';document.getElementById('total').textContent='0 грн';return;}
+  let html='';
+  for(const z of zones){
+    const zItems=items.filter(i=>i.zoneId===z.id);
+    if(!zItems.length) continue;
+    const zTotal=zItems.reduce((a,i)=>a+i.p*i.qty,0);
+    html+=`<div class="zone-section"><div class="zone-head"><span class="zone-head-name">${z.name}</span><span class="zone-head-total" id="ztotal_${z.id}">${Math.round(zTotal).toLocaleString('uk')} грн</span></div>`;
+    for(const s of zItems){
+      html+=`<div class="sel-item"><div class="sel-top"><span class="sel-name">${s.n}</span><button class="del" onclick="removeItem(${s.id})">&#215;</button></div><div class="sel-row"><div class="sel-col"><label>Кількість</label><input type="number" min="0" step="0.01" value="${s.qty}" onchange="updateField(${s.id},'qty',this.value)"/></div><div class="sel-col"><label>Ціна, грн</label><input type="number" min="0" value="${s.p}" onchange="updateField(${s.id},'p',this.value)"/></div><span class="sel-sum" id="sum_${s.id}">${Math.round(s.p*s.qty).toLocaleString('uk')} грн</span></div></div>`;
+    }
+    html+='</div>';
+  }
+  box.innerHTML=html||'<div class="empty">Оберіть роботи зі списку</div>';
+  document.getElementById('total').textContent=Math.round(items.reduce((a,i)=>a+i.p*i.qty,0)).toLocaleString('uk')+' грн';
+}
+
+// ── ESTIMATE PRINT VIEW ──
+function escHtml(v){
+  return String(v ?? '').replace(/[&<>'"]/g, ch => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+  }[ch]));
+}
+
+function generatePDF(){
+  if(!items.length){alert('Додайте хоча б одну позицію');return;}
+
+  const client=document.getElementById('clientName').value||'—';
+  const obj=document.getElementById('clientObj').value||'—';
+  const date=new Date().toLocaleDateString('uk-UA');
+  const opName=currentOp?OPS[currentOp].name:'—';
+  const grandTotal=items.reduce((a,i)=>a+i.p*i.qty,0);
+
+  let rowNum=1;
+  let rows='';
+
+  for(const z of zones){
+    const zItems=items.filter(i=>i.zoneId===z.id);
+    if(!zItems.length) continue;
+    const zTotal=zItems.reduce((a,i)=>a+i.p*i.qty,0);
+
+    rows+=`<tr class="zone-row"><td colspan="6">${escHtml(z.name)}</td></tr>`;
+
+    for(const s of zItems){
+      rows+=`<tr>
+        <td class="num">${rowNum++}</td>
+        <td>${escHtml(s.n)}</td>
+        <td class="unit">${escHtml(s.u)}</td>
+        <td class="right">${Number(s.qty).toLocaleString('uk')}</td>
+        <td class="right">${Number(s.p).toLocaleString('uk')} грн</td>
+        <td class="right strong">${Math.round(s.p*s.qty).toLocaleString('uk')} грн</td>
+      </tr>`;
+    }
+
+    rows+=`<tr class="zone-total"><td colspan="6">Разом по ділянці: ${Math.round(zTotal).toLocaleString('uk')} грн</td></tr>`;
+  }
+
+  const html=`<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кошторис — xlplitka.pro</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;color:#111;background:#f4f4f2;margin:0;padding:24px;font-size:13px}
+.page{max-width:960px;margin:0 auto;background:#fff;padding:28px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:18px;margin-bottom:20px}
+.brand{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px}
+h1{font-size:28px;line-height:1.1;margin:0;color:#111}
+.print-btn{padding:11px 18px;background:#111;color:#fff;border:0;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.print-btn:hover{background:#333}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;margin-bottom:22px;color:#333}
+.meta div{border-bottom:1px solid #eee;padding-bottom:6px}
+.meta span{display:block;font-size:10px;font-weight:700;color:#999;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ddd;padding:8px 9px;vertical-align:top}
+th{background:#111;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.04em;text-align:left}
+.num{width:38px;text-align:center;color:#777}
+.unit{width:70px;text-align:center;color:#555}
+.right{text-align:right;white-space:nowrap}
+.strong{font-weight:700}
+.zone-row td{background:#e8e8e6;font-weight:700;text-transform:uppercase;color:#333;letter-spacing:.06em}
+.zone-total td{background:#fafaf8;text-align:right;font-weight:700;color:#555}
+.grand{display:flex;justify-content:flex-end;margin-top:22px}
+.grand-box{background:#111;color:#fff;padding:16px 20px;border-radius:12px;font-size:22px;font-weight:700;min-width:280px;text-align:right}
+.note{margin-top:22px;color:#999;font-size:11px;line-height:1.5;border-top:1px solid #eee;padding-top:14px}
+@media print{
+  body{background:#fff;padding:0;font-size:11px}
+  .page{box-shadow:none;border-radius:0;max-width:none;padding:12mm}
+  .print-btn{display:none}
+  .top{margin-bottom:14px;padding-bottom:12px}
+  h1{font-size:22px}
+  th,td{padding:5px 6px}
+  .grand-box{font-size:18px}
+}
+@media(max-width:700px){
+  body{padding:12px}
+  .page{padding:18px;border-radius:12px}
+  .top{flex-direction:column}
+  .print-btn{width:100%}
+  .meta{grid-template-columns:1fr}
+  table{font-size:11px}
+  th,td{padding:6px 5px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div>
+      <div class="brand">xlplitka.pro</div>
+      <h1>Кошторис</h1>
+    </div>
+    <button class="print-btn" onclick="window.print()">Друк / Зберегти PDF</button>
+  </div>
+
+  <div class="meta">
+    <div><span>Клієнт</span>${escHtml(client)}</div>
+    <div><span>Об'єкт / адреса</span>${escHtml(obj)}</div>
+    <div><span>Оператор</span>${escHtml(opName)}</div>
+    <div><span>Дата</span>${escHtml(date)}</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Найменування робіт</th>
+        <th>Од.</th>
+        <th class="right">К-сть</th>
+        <th class="right">Ціна</th>
+        <th class="right">Сума</th>
+      </tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>
+
+  <div class="grand"><div class="grand-box">${Math.round(grandTotal).toLocaleString('uk')} грн</div></div>
+
+  <div class="note">Кошторис є попереднім і може бути скоригований після огляду об'єкта та уточнення технічних деталей.</div>
+</div>
+</body>
+</html>`;
+
+  const win=window.open('', '_blank');
+  if(!win){alert('Браузер заблокував нову вкладку. Дозвольте pop-up для цього сайту.');return;}
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+  autoSave();
+}
+
+// ── INIT ──
+renderHome();
+</script>
+</body>
+</html>
