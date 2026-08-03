@@ -17,6 +17,10 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 .btn-new:hover{background:#333}
 .home-list{padding:14px}
 .home-empty{text-align:center;padding:60px 20px;color:#ccc;font-size:13px}
+.backup-row{display:flex;gap:6px;margin-top:8px}
+.btn-backup{flex:1;padding:8px;background:transparent;border:1px solid #ddd;border-radius:8px;font-size:11px;font-weight:600;color:#888;cursor:pointer}
+.btn-backup:hover{background:#f5f5f3;color:#555}
+.backup-hint{font-size:10px;color:#ccc;text-align:center;margin-top:6px;line-height:1.4}
 .smeta-card{background:#fff;border:1px solid #e8e8e6;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .15s}
 .smeta-card:hover{border-color:#aaa}
 .sc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
@@ -24,9 +28,6 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 .sc-obj{font-size:12px;color:#888;margin-bottom:4px}
 .sc-meta{display:flex;gap:10px;align-items:center}
 .sc-date{font-size:11px;color:#bbb}
-.sc-op{font-size:11px;padding:2px 7px;border-radius:20px;font-weight:600}
-.sc-op.ak{background:#e8f0fe;color:#1a73e8}
-.sc-op.xl{background:#111;color:#fff}
 .sc-total{font-size:15px;font-weight:700;color:#111;white-space:nowrap}
 .sc-zones{font-size:11px;color:#bbb;margin-top:4px}
 .sc-del{background:none;border:none;color:#ddd;font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0}
@@ -35,20 +36,6 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 /* MODALS */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-bg.open{display:flex}
-.modal{background:#fff;border-radius:14px;padding:24px;max-width:340px;width:100%}
-.modal h2{font-size:16px;font-weight:700;margin-bottom:5px}
-.modal p{font-size:12px;color:#999;margin-bottom:16px;line-height:1.5}
-.op-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:2px solid #e0e0de;border-radius:10px;background:#fff;cursor:pointer;margin-bottom:8px;transition:all .15s;text-align:left}
-.op-btn:hover{border-color:#999}
-.op-btn.selected{border-color:#111;background:#fafaf8}
-.op-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
-.op-icon.ak{background:#e8f0fe;color:#1a73e8}
-.op-icon.xl{background:#111;color:#fff}
-.op-name{font-size:13px;font-weight:700;color:#111}
-.op-sub{font-size:11px;color:#aaa;margin-top:1px}
-.modal-confirm{width:100%;padding:11px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:14px}
-.modal-confirm:disabled{background:#ccc;cursor:not-allowed}
-.modal-cancel{width:100%;padding:9px;background:transparent;border:1px solid #ddd;border-radius:8px;font-size:13px;color:#888;cursor:pointer;margin-top:7px}
 .coef-modal-inner{background:#fff;border-radius:14px;padding:24px;max-width:380px;width:100%;max-height:82vh;display:flex;flex-direction:column}
 .coef-modal-inner h2{font-size:15px;font-weight:700;margin-bottom:4px}
 .coef-modal-inner .sub{font-size:12px;color:#999;margin-bottom:14px;line-height:1.4}
@@ -68,11 +55,16 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 .editor-topbar-row1{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .btn-back{background:none;border:none;font-size:20px;cursor:pointer;color:#555;padding:0 4px 0 0;line-height:1}
 .editor-title{flex:1;font-size:14px;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.op-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #ddd;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;white-space:nowrap}
-.op-pill:hover{background:#f5f5f3}
-.op-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.op-dot.ak{background:#1a73e8}
-.op-dot.xl{background:#111}
+.btn-instructions{width:100%;padding:11px;background:#fff;border:1px solid #D4A843;border-radius:9px;font-size:13px;font-weight:700;color:#9a7a1f;cursor:pointer;margin-top:8px}
+.btn-instructions:hover{background:#fffaf0}
+.instr-body{padding:16px 18px 40px;max-width:640px;margin:0 auto;width:100%;font-size:13px;line-height:1.55;color:#333}
+.instr-body h2{font-size:15px;margin:22px 0 8px;color:#111}
+.instr-body h2:first-child{margin-top:4px}
+.instr-body ol{padding-left:20px;margin:0 0 8px}
+.instr-body li{margin-bottom:6px}
+.instr-body p{margin:0 0 10px}
+.instr-term{font-weight:700;color:#111}
+.instr-note{margin-top:6px;padding:12px 14px;background:#fff5dd;border:1px solid #f0dfa0;border-radius:9px;font-size:12px;color:#9a7a1f}
 .obj-row{display:flex;gap:6px}
 .obj-row input{flex:1;padding:7px 9px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;color:#111;min-width:0}
 .obj-row input:focus{outline:none;border-color:#999}
@@ -109,7 +101,6 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 .imeta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;margin-right:4px}
 .iunit{font-size:10px;color:#bbb}
 .iprice{font-size:12px;font-weight:700;color:#333;white-space:nowrap}
-.iprice2{font-size:10px;color:#ccc;text-decoration:line-through;white-space:nowrap}
 .iprice-input{width:80px;padding:4px 7px;border:1px solid #ddd;border-radius:6px;font-size:12px;font-weight:700;color:#333;text-align:right;background:#fff}
 .iprice-input:focus{outline:none;border-color:#999}
 .iadd{padding:6px 13px;font-size:13px;font-weight:700;border:1px solid #ddd;border-radius:6px;background:#fff;color:#333;cursor:pointer;white-space:nowrap;flex-shrink:0}
@@ -259,7 +250,9 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
   .epage#ep-summary{border-left:1px solid #e0e0de;min-height:60vh}
   .etabbar{display:none}
 }
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -268,9 +261,70 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
   <div class="home-header">
     <div class="home-brand">xlplitka.pro — Калькулятор</div>
     <button class="btn-new" onclick="newSmeta()">+ Новий кошторис</button>
+    <button class="btn-instructions" onclick="showScreen('instructions')">&#128214; Інструкція</button>
+    <div class="backup-row">
+      <button class="btn-backup" onclick="exportBackup()">&#11015; Резервна копія</button>
+      <button class="btn-backup" onclick="document.getElementById('backup-file-input').click()">&#11014; Відновити</button>
+      <input type="file" id="backup-file-input" accept="application/json,.json" style="display:none" onchange="importBackupFile(this)" />
+    </div>
+    <div class="backup-hint">Кошториси зберігаються у цьому браузері й прив'язані саме до цього файлу. Якщо відкриваєте калькулятор із нового завантаженого файлу — вони не переносяться автоматично, робіть резервну копію.</div>
   </div>
   <div class="home-list" id="home-list">
     <div class="home-empty" id="home-empty">Кошторисів ще немає.<br>Натисніть «+ Новий кошторис»</div>
+  </div>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="screen" id="screen-instructions">
+  <div class="editor-topbar">
+    <div class="editor-topbar-row1">
+      <button class="btn-back" onclick="showScreen('home')">&#8592;</button>
+      <span class="editor-title">Інструкція</span>
+    </div>
+  </div>
+  <div class="instr-body">
+
+    <h2>Як зробити кошторис у калькуляторі</h2>
+    <ol>
+      <li>Відкрий файл калькулятора в браузері.</li>
+      <li>Натисни «+ Новий кошторис».</li>
+      <li>(Не обов'язково) Впиши ім'я клієнта та адресу — це просто підпис.</li>
+      <li>Натисни «Додати ділянку» і впиши назву кімнати (наприклад «Ванна», «Кухня»). Кожне приміщення — окрема ділянка.</li>
+      <li>Виміряй рулеткою цю кімнату: площу (довжина × ширина, у м²) для підлоги/стін і довжину по контуру (у метрах) для кутів і країв.</li>
+      <li>У списку робіт обери потрібні пункти (ґрунтовка, гідроізоляція, стяжка, тепла підлога, укладання плитки, різи, затирка, герметизація тощо) і впиши свою кількість. Одиницю виміру (м², м.п. чи шт.) калькулятор підказує сам біля кожної позиції.</li>
+      <li>Суму по кожному рядку й по ділянці калькулятор рахує сам — множити нічого не треба.</li>
+      <li>Якщо з'явиться коефіцієнт (наприклад надбавка за малий об'єм) — познач, на які позиції він діє, і підтверди.</li>
+      <li>Повтори кроки 4–8 для кожної кімнати.</li>
+      <li>Загальна сума ремонту — внизу екрана, оновлюється автоматично.</li>
+      <li>За потреби завантаж кошторис як PDF або Excel кнопкою внизу екрана.</li>
+    </ol>
+    <div class="instr-note">Це орієнтовна цифра — точна ціна після виїзду майстра на об'єкт.</div>
+
+    <h2>Обов'язкові позиції — що для чого</h2>
+    <p><span class="instr-term">Ґрунтовка</span> — потрібна, щоб клей і стяжка добре зчепилися з основою і не відшаровувались. Наноситься перед будь-якою наступною роботою — стяжкою, гідроізоляцією чи плиткою.</p>
+    <p><span class="instr-term">Гідроізоляція</span> — обов'язкова у вологих приміщеннях (санвузол, ванна, кухня біля мийки). Захищає стяжку і сусідів знизу від протікання, якщо трапиться потоп чи просто конденсат.</p>
+    <p><span class="instr-term">Армування кутів гідроізоляційною стрічкою</span> — кути й стики між стіною і підлогою — найслабші місця гідроізоляції, вони найшвидше тріскають. Стрічка проклеюється саме там, щоб вода не пройшла через шов.</p>
+    <p><span class="instr-term">Стяжка / наливна підлога</span> — вирівнює підлогу перед укладанням плитки. Без рівної основи плитка ляже нерівно і може тріснути.</p>
+    <p><span class="instr-term">Затирка швів</span> — заповнює проміжки між плитками. Без неї в шви потрапляє бруд і вода, плитка з часом розхитується.</p>
+    <p><span class="instr-term">Герметизація силіконом</span> — робиться в кутах і місцях стику з ванною/душем замість жорсткої затирки, бо там є невеликий рух конструкції (вода, температура) — жорсткий шов там потріскається, а силікон гнучкий.</p>
+    <p><span class="instr-term">Різ плитки під 90°</span> — прямий рівний різ, коли плитку треба підігнати під розмір стіни чи підлоги (звичайна підрізка по краю).</p>
+    <p><span class="instr-term">Різ плитки під 45°</span> — «запил» під кутом, щоб дві плитки зійшлися на зовнішньому куті без видимого торця, як рамка у картини. Робиться, коли кут виступає назовні (наприклад, зовнішній ріг стіни, підвіконня, поличка).</p>
+    <p><span class="instr-term">Виріз отворів</span> — коли на плитці потрібно зробити діру під розетку, трубу чи змішувач.</p>
+    <p><span class="instr-term">Обклеювання малярною стрічкою</span> — захищає краї плитки від забруднення клеєм чи затиркою під час роботи, знімається після.</p>
+    <p><span class="instr-term">Тепла підлога</span> — не обов'язкова, ставиться за бажанням клієнта; якщо є — під неї роблять окрему штробу для кабелю і заливають стяжкою/нівеліром зверху.</p>
+    <p><span class="instr-term">Виготовлення душового піддону / раковини з плитки</span> — індивідуальні вироби на замовлення, коли клієнт хоче душ чи раковину не покупні, а зроблені з плитки/каменю під розмір приміщення.</p>
+
+    <h2>Санвузол: приклад — що вибрати для підлоги і стін</h2>
+    <p><b>Підлога.</b> Якщо є старе покриття — демонтаж старого покриття. Далі ґрунтовка (щоб усе добре зчепилось), гідроізоляція (щоб не залило сусідів знизу) і обов'язково армування кутів гідроізоляційною стрічкою по периметру, там де підлога стикається зі стінами. Якщо з підлоги виходить труба каналізації чи змішувача — армування сантехвиходів гідроманжетами навколо неї.</p>
+    <p>Якщо підлога нерівна — стяжка або наливна підлога для вирівнювання. Якщо потрібна тепла підлога — тепла підлога (мат) + штроба під теплу підлогу для кабелю.</p>
+    <p>Далі саме укладання плитки потрібного формату (вказуєш, який розмір плитки береш). До цього додається різ плитки під 90° (звичайна підрізка по краю кімнати) і виріз отворів, якщо є труба чи злив у підлозі.</p>
+    <p>Наприкінці — затирка швів і герметизація швів силіконом по периметру, там де підлога стикається зі стінами, ванною чи душовою кабіною. Якщо душ без піддону — додатково встановлення лінійного трапу.</p>
+    <p><b>Стіни.</b> Так само спочатку демонтаж старого покриття, якщо потрібно. Далі ґрунтовка стін. Якщо стіни криві — монтаж штукатурної сітки під армування, або монтаж ГКЛ, якщо треба зробити фальшстіну (наприклад під інсталяцію унітазу чи нішу).</p>
+    <p>Обов'язково гідроізоляція стін у мокрій зоні — там де ванна, душ, раковина (зазвичай до висоти приблизно 1,8–2 м, вище не обов'язково).</p>
+    <p>Далі укладання плитки потрібного формату на стіни. До цього — різ плитки під 90° (звичайна підрізка) і різ під 45°, якщо десь є зовнішній кут без металевого профілю (наприклад ніша чи виступ). Виріз отворів під розетки, змішувач, полички.</p>
+    <p>Наприкінці — затирка швів і герметизація силіконом у кутах, на стику з ванною/душем.</p>
+    <p><b>Додатково, якщо є в проєкті.</b> Виготовлення душового піддону або раковини з плитки — якщо не купуєш готові. Монтаж прихованого люка ревізії — якщо є стояк, до якого потрібен доступ. Влаштування панелі під ванну — якщо ванна закрита плиткою збоку.</p>
+
   </div>
 </div>
 
@@ -280,11 +334,6 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
     <div class="editor-topbar-row1">
       <button class="btn-back" onclick="goHome()">&#8592;</button>
       <span class="editor-title" id="editor-title">Новий кошторис</span>
-      <div class="op-pill" onclick="openOpModal()" id="op-pill">
-        <div class="op-dot" id="op-dot"></div>
-        <span id="op-label">Оператор</span>
-        <span style="color:#bbb;font-size:10px">&#9998;</span>
-      </div>
     </div>
     <div class="obj-row">
       <input id="clientName" placeholder="Ім'я клієнта" oninput="autoSave();updateEditorTitle()" />
@@ -361,28 +410,11 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
     </div>
     <div class="preview-actions">
       <button class="btn-edit-back" onclick="closePreview()">&#8592; Редагувати</button>
+      <button class="btn-edit-back" onclick="downloadExcel()" style="border-color:#1e7e34;color:#1e7e34">&#128202; Excel</button>
       <button class="btn-download" onclick="downloadSmeta()">&#128196; Зберегти HTML</button>
     </div>
   </div>
   <div class="preview-body" id="preview-body">
-  </div>
-</div>
-
-<!-- OPERATOR MODAL -->
-<div class="modal-bg" id="modal">
-  <div class="modal">
-    <h2>Оберіть оператора</h2>
-    <p>Ціни перераховуються автоматично при зміні</p>
-    <div class="op-btn" id="ob-ak" onclick="selectOp('ak')">
-      <div class="op-icon ak">А</div>
-      <div><div class="op-name">Андрій Калинник</div><div class="op-sub">Вартість 1</div></div>
-    </div>
-    <div class="op-btn" id="ob-xl" onclick="selectOp('xl')">
-      <div class="op-icon xl">X</div>
-      <div><div class="op-name">xlplitka.pro</div><div class="op-sub">Вартість 2</div></div>
-    </div>
-    <button class="modal-confirm" id="modal-confirm" onclick="confirmOp()" disabled>Підтвердити</button>
-    <button class="modal-cancel" id="modal-cancel" onclick="closeModal()">Скасувати</button>
   </div>
 </div>
 
@@ -401,136 +433,132 @@ body{font-family:Arial,sans-serif;background:#f4f4f2;color:#111;font-size:14px;m
 
 <script>
 
+/*CAT_START*/
 const CAT=[
-  {s:"Організаційні послуги",items:[
-    {n:"Виїзд для прорахунку вартості робіт",u:"шт.",p:[1000,1000]},
-    {n:"Обсяг замовлення менше 25 м кв.",u:"коеф.",p:[1.3,1.3],isCoef:true},
-    {n:"Виїзд спеціаліста для консультації",u:"шт.",p:[1000,1000]},
-    {n:"Транспортні витрати за містом",u:"км",p:[15,15]},
-    {n:"Підняття широкоформатної плитки по сходах",u:"поверх",p:[500,500]},
-    {n:"Підняття матеріалу по сходах / ліфт",u:"шт.",p:[0,0],needsPrice:true},
-    {n:"Розвантаження матеріалу",u:"тона",p:[0,0],needsPrice:true},
+  {s:"ОРГАНІЗАЦІЙНІ ПОСЛУГИ",items:[
+    {n:"Виїзд для прорахунку вартості робіт",u:"шт.",p:1000},
+    {n:"Обсяг замовлення менше 25 м кв.",u:"коеф.",p:1.3,isCoef:true},
+    {n:"Виїзд спеціаліста для консультації",u:"шт.",p:1000},
+    {n:"Транспортні витрати за містом",u:"км",p:15},
+    {n:"Підняття широкоформатної плитки по сходах",u:"поверх",p:500},
+    {n:"Підняття матеріалу по сходах, ліфт",u:"",p:0,needsPrice:true},
+    {n:"Розвантаження матеріалу",u:"тона",p:0,needsPrice:true},
   ]},
-  {s:"Підготовчі роботи",items:[
-    {n:"Демонтаж старого покриття стяжка, плитки",u:"м²",p:[370,300]},
-    {n:"Чистка від напливів, знепилення поверхні",u:"м²",p:[50,50]},
-    {n:"Грунтовка глибокопроникна",u:"м²",p:[35,40]},
-    {n:"Шліфування, видалення слабкого шару",u:"м²",p:[150,200]},
-    {n:"Монтаж системи Maretex (мембрана)",u:"м²",p:[230,250]},
-    {n:"Стяжка, наливна підлога",u:"м²",p:[300,380]},
-    {n:"Монтаж демпферної стрічки",u:"м.п.",p:[70,70]},
-    {n:"Заміна затирки швів",u:"м²",p:[400,450]},
-    {n:"Заливання теплої підлоги нівеліром або клеєм",u:"м²",p:[300,350]},
-    {n:"Стяжка маякова цементно-піщана до 60 мм",u:"м²",p:[400,450]},
-    {n:"Нанесення гребінки клею під штукатурку / стяжку",u:"м²",p:[170,180]},
-    {n:"Закладення штроб",u:"м.п.",p:[140,150]},
-    {n:"Закладення сантехнічних штроб",u:"м.п.",p:[240,250]},
-    {n:"Влаштування цементної гідроізоляції",u:"м²",p:[170,220]},
-    {n:"Нанесення однокомпонентної гідроізоляції",u:"м²",p:[200,250]},
-    {n:"Нанесення двокомпонентної гідроізоляції",u:"м²",p:[380,400]},
-    {n:"Армування кутів гідроізоляційною стрічкою",u:"м.п.",p:[100,140]},
-    {n:"Армування сантехвиходів гідроманжетами",u:"шт.",p:[250,250]},
-    {n:"Монтаж ГКЛ на інсталяцію",u:"м.п.",p:[2000,2500]},
-    {n:"Монтаж погонних елементів ГКЛ",u:"м.п.",p:[500,550]},
-    {n:"Монтаж фальшстіни ГКЛ в 1 шар",u:"м²",p:[500,550]},
-    {n:"Монтаж додаткового шару гіпсокартону",u:"м²",p:[150,230]},
-    {n:"Збірка каркасу під ГКЛ, метал",u:"м²",p:[350,380]},
-    {n:"Виріз отвору в гіпсокартоні",u:"шт.",p:[85,85]},
-    {n:"Устройство панелі під ванну (ГКЛ, цегла, піноблок)",u:"м.п.",p:[2600,2600]},
-    {n:"Монтаж екрана під ванну ГКЛ з нішею під ноги",u:"м.п.",p:[2950,2950]},
-    {n:"Монтаж прихованого люка ревізії до 450 мм",u:"шт.",p:[1500,1500]},
-    {n:"Монтаж прихованого люка ревізії до 600 мм",u:"шт.",p:[2000,2200]},
-    {n:"Захисне укриття плитки (ДВП, картон, міреплон)",u:"м²",p:[50,60]},
-    {n:"Монтаж електричної теплої підлоги (мат)",u:"м²",p:[350,500]},
-    {n:"Штроба під теплу підлогу + укладка кабеля",u:"м.п.",p:[150,180]},
-    {n:"Встановлення ванни з пропінкою, віброізоляція",u:"шт.",p:[3800,3800]},
-    {n:"Опуск дверного прорізу",u:"шт.",p:[350,450]},
-    {n:"Монтаж штукатурної сітки / армування",u:"м²",p:[140,180]},
-    {n:"Встановлення підрозетників",u:"шт.",p:[100,100]},
-    {n:"Шумоізоляція стояка каналізації",u:"м.п.",p:[700,750]},
-    {n:"Затягування клеєм над плиткою під натяжні стелі",u:"м.п.",p:[220,280]},
-    {n:"Монтаж компенсаційного анкера на епоксидний розчин",u:"шт.",p:[250,250]},
-    {n:"Обклеювання малярною стрічкою",u:"м.п.",p:[40,50]},
-    {n:"Встановлення лінійного трапу",u:"шт.",p:[1500,1800]},
+  {s:"ПІДГОТОВЧІ РОБОТИ",items:[
+    {n:"Демонтаж старого покриття стяжка, плитки",u:"м²/м.п.",p:550},
+    {n:"Чистка від напливів чорнового матеріалу, обезпилення поверхні",u:"м²/м.п.",p:70},
+    {n:"Грунтовка глибокопроникна",u:"м²/м.п.",p:50},
+    {n:"Шліфування видалення слабкого шару, молочка",u:"м²/м.п.",p:200},
+    {n:"Монтаж системи Maretex (мембрана)",u:"м²",p:300},
+    {n:"Стяжка, наливна підлога",u:"м²",p:400},
+    {n:"Монтаж демферної стрічки",u:"м.п.",p:100},
+    {n:"Заміна затирки швів",u:"м²/м.п.",p:600},
+    {n:"Заливання теплої підлоги нівеліром або плиточним клеєм",u:"м²",p:400},
+    {n:"Стяжка маякова цементно-піщана до 60 мм (+50 грн 10 мм)",u:"м²",p:550},
+    {n:"Нанесення гребінки клею на підлогу, стіни під штукатурку, стяжку",u:"м²/м.п.",p:200},
+    {n:"Закладення штроб від",u:"м.п.",p:200},
+    {n:"Закладення сантехнічних штроб",u:"м.п.",p:300},
+    {n:"Влаштування цементної гідроізоляції",u:"м²",p:250},
+    {n:"Нанесення однокомпонентної гідроізоляції",u:"м²/м.п.",p:275},
+    {n:"Нанесення двокомпонентної гідроізоляції",u:"м²/м.п.",p:550},
+    {n:"Армування кутів гідроізоляційною стрічкою",u:"м.п.",p:150},
+    {n:"Армування сантехвиходів гідроманжетами",u:"шт.",p:350},
+    {n:"Монтаж ГКЛ на інсталяцію",u:"м.п.",p:2800},
+    {n:"Монтаж погонних елементів ГКЛ",u:"м.п.",p:700},
+    {n:"Монтаж фальшстіни ГКЛ в 1 шар",u:"м²",p:700},
+    {n:"Монтаж додаткового шару гіпсокартону",u:"м²/м.п.",p:700},
+    {n:"Збірка каркасу під ГКЛ, метал",u:"м²/м.п.",p:500},
+    {n:"Виріз отвору в гіпсокартоні",u:"шт.",p:120},
+    {n:"Устройство панелі під ванну, пряма - ГКЛ, цегла, піноблок",u:"м.п.",p:3700},
+    {n:"Монтаж екрана під ванну - ГКЛ з нішею під ноги",u:"м.п.",p:4200},
+    {n:"Монтаж прихованого люка ревізії під плитку до 450 мм",u:"шт.",p:2200},
+    {n:"Монтаж прихованого люка ревізії під плитку до 600 мм",u:"шт.",p:2900},
+    {n:"Захисне укриття плитки листами ДВП, картон, міреплон",u:"м²/м.п.",p:60},
+    {n:"Монтаж електричної теплої підлоги (мат)",u:"м²",p:500},
+    {n:"Штроба під теплу підлогу + укладка кабеля з замазкою клеєм",u:"м.п.",p:200},
+    {n:"Встановлення ванни з пропінкою, віброізоляція",u:"шт.",p:5500},
+    {n:"Опуск дверного прорізу",u:"шт.",p:500},
+    {n:"Монтаж штукатурної сітки під гідроізоляцію/армування",u:"м²/м.п.",p:200},
+    {n:"Встановлення підрозетників",u:"шт.",p:140},
+    {n:"Шумоізоляція стояка каналізації",u:"м.п.",p:800},
+    {n:"Затягування клеєм над плиткою під натяжні стелі",u:"м.п.",p:280},
+    {n:"Монтаж компенсаційного анкера у стяжку на епоксидний розчин",u:"шт.",p:250},
+    {n:"Обклеювання малярною стрічкою",u:"м.п.",p:50},
+    {n:"Встановлення лінійного трапу, від",u:"шт.",p:2100},
   ]},
-  {s:"Оброблення плитки та вироби",items:[
-    {n:"Облицювання екрана ванни прямого",u:"м.п.",p:[1650,1800]},
-    {n:"Обліцовка сходини прямої",u:"м.п.",p:[1250,1350]},
-    {n:"Обліцовка та виготовлення ніші в екрані ванни для LED",u:"м.п.",p:[1000,1000]},
-    {n:"Виріз отворів до 70 мм",u:"шт.",p:[250,275]},
-    {n:"Виріз отворів більше 70 мм",u:"шт.",p:[350,375]},
-    {n:"Виріз складних отворів прямокутних більше 90 мм",u:"шт.",p:[850,1000]},
-    {n:"Різ плитки під 45° заусовка, кераміка / керамограніт",u:"м.п.",p:[350,470]},
-    {n:"Різ плитки під 90° зі шліфуванням (чистовий)",u:"м.п.",p:[300,350]},
-    {n:"Різ плитки під 90° (чорновий)",u:"м.п.",p:[150,165]},
-    {n:"Різ під 45° кабанчик",u:"м.п.",p:[500,550]},
-    {n:"Різ під 90° кабанчик",u:"м.п.",p:[380,420]},
-    {n:"Затирка швів кабанчик",u:"м.п.",p:[550,600]},
-    {n:"Виготовлення вентиляції прихованого монтажу",u:"шт.",p:[4400,4800]},
-    {n:"Виготовлення раковини з керамограніту",u:"шт.",p:[500,500]},
-    {n:"Виготовлення душового піддону 900x900 мм",u:"шт.",p:[10000,15000]},
-    {n:"Виготовлення душового піддону 900x1200 мм",u:"шт.",p:[14000,20000]},
-    {n:"Заливання подіума для ванної",u:"шт.",p:[3800,4000]},
-    {n:"Виготовлення поличок з плитки до 600 мм",u:"шт.",p:[2000,2800]},
-    {n:"Заповнення швів цементною сумішшю",u:"м²",p:[200,220]},
-    {n:"Формування зовнішнього кута з цементної затирки",u:"м.п.",p:[250,285]},
-    {n:"Герметизація швів силіконом",u:"м.п.",p:[150,180]},
-    {n:"Установка поліетиленового шнура",u:"м.п.",p:[200,220]},
-    {n:"Заповнення швів епоксидною сумішшю",u:"м²",p:[250,300]},
-    {n:"Заповнення швів епоксидною сумішшю (малий формат)",u:"м²",p:[500,600]},
-    {n:"Формування зовнішнього кута з епоксидної суміші",u:"м.п.",p:[350,375]},
+  {s:"ОБРОБЛЕННЯ ПЛИТКИ ТА ВИРОБИ",items:[
+    {n:"Облицювання екрана ванни - прямого",u:"м.п.",p:2400},
+    {n:"Обліцовка сходини прямої",u:"м.п.",p:1700},
+    {n:"Обліцовка та виготовлення ніші в екрані ванни для LED підсвітки",u:"м.п.",p:1400},
+    {n:"Виріз отворів до 50 мм",u:"шт.",p:275},
+    {n:"Виріз отворів більше 50 мм",u:"шт.",p:375},
+    {n:"Виріз складних отворів, прямокутних більше 90 мм",u:"шт.",p:1000},
+    {n:"Різ плитки під 45° заусовка, кераміка/керамограніт 1-бік",u:"м.п.",p:475},
+    {n:"Різ плитки під 90° зі шліфуванням (чистовий різ)",u:"м.п.",p:350},
+    {n:"Різ під 45° Кабанчик",u:"м.п.",p:550},
+    {n:"Різ під 90° Кабанчик",u:"м.п.",p:450},
+    {n:"Затірка швів Кабанчик",u:"м.п.",p:700},
+    {n:"Виготовлення вентиляції прихованого монтажу",u:"шт.",p:6000},
+    {n:"Виготовлення раковини з керамограніту, від",u:"шт.",p:20000},
+    {n:"Виготовлення душового піддону 900×900 мм - комплекс",u:"шт.",p:15000},
+    {n:"Виготовлення душового піддону, індівідуальний розмір",u:"шт.",p:0,needsPrice:true},
+    {n:"Заливання подіума для ванної",u:"шт.",p:5000},
+    {n:"Виготовлення поличок з плитки до 600 мм",u:"шт.",p:3000},
+    {n:"Заповнення швів цементною сумішшю",u:"м²/м.п.",p:250},
+    {n:"Формування зовнішнього кута з цементної затирки",u:"м.п.",p:350},
+    {n:"Герметизація швів - силіконом",u:"м.п.",p:200},
+    {n:"Установка поліетиленового шнура",u:"м.п.",p:250},
+    {n:"Заповнення швів епоксидною сумішшю",u:"м²/м.п.",p:350},
+    {n:"Формування зовнішнього кута з епоксидної суміші",u:"м.п.",p:500},
+    {n:"Заповнення швів плитки епоксидною сумішшю малого формата",u:"м²/м.п.",p:700},
   ]},
-  {s:"Укладання плитки",items:[
-    {n:"Підбір малюнка",u:"м²",p:[100,100]},
-    {n:"Укладання малоформатної плитки 50-250 мм (кабанчик)",u:"м²",p:[1800,2000]},
-    {n:"Укладання плитки 300x300 мм",u:"м²",p:[650,700]},
-    {n:"Укладання плитки 300x600 мм",u:"м²",p:[650,700]},
-    {n:"Укладання плитки 300x900 мм",u:"м²",p:[700,750]},
-    {n:"Укладання плитки 600x600 мм",u:"м²",p:[730,850]},
-    {n:"Укладання плитки 600x1200 мм",u:"м²",p:[850,950]},
-    {n:"Укладання плитки 200x1200 мм",u:"м²",p:[950,1050]},
-    {n:"Укладання плитки 400x1200 мм",u:"м²",p:[990,1075]},
-    {n:"Укладання плитки 600x1800 мм",u:"м²",p:[980,1075]},
-    {n:"Укладання плитки 900x1800 мм",u:"м²",p:[1450,1600]},
-    {n:"Укладання плитки 800x800 мм",u:"м²",p:[900,1050]},
-    {n:"Укладання плитки 800x1600 мм",u:"м²",p:[1200,1350]},
-    {n:"Укладання плитки 1000x1000 мм",u:"м²",p:[1100,1200]},
-    {n:"Укладання плитки кабанчик, під цеглу",u:"м²",p:[1800,2000]},
-    {n:"Укладання дошки до 900 мм",u:"м²",p:[950,1100]},
-    {n:"Укладання дошки до 1200 мм",u:"м²",p:[950,1250]},
-    {n:"Укладання дошки до 1800 мм",u:"м²",p:[1300,1500]},
-    {n:"Укладання по діагоналі / ялинкою / зі вставками",u:"коеф.",p:[1.25,1.25],isCoef:true},
-    {n:"Укладка керамограніту товщиною 20-30 мм",u:"м²",p:[1600,1750]},
-    {n:"Укладка мозаїки",u:"м²",p:[2000,2500]},
+  {s:"УКЛАДАННЯ ПЛИТКИ",items:[
+    {n:"Підбір малюнка",u:"м²",p:100},
+    {n:"Укладання малоформатної плитки від 50-250 мм",u:"м²/м.п.",p:2500},
+    {n:"Укладання плитки 300×300 мм",u:"м²/м.п.",p:900},
+    {n:"Укладання плитки 300×600 мм",u:"м²/м.п.",p:900},
+    {n:"Укладання плитки 300×900 мм",u:"м²/м.п.",p:1000},
+    {n:"Укладання плитки 600×600 мм",u:"м²/м.п.",p:1100},
+    {n:"Укладання плитки 600×1200 мм",u:"м²/м.п.",p:1200},
+    {n:"Укладання плитки 200×1200 мм",u:"м²/м.п.",p:1350},
+    {n:"Укладання плитки 400×1200 мм",u:"м²/м.п.",p:1400},
+    {n:"Укладання плитки 600×1800 мм",u:"м²/м.п.",p:1450},
+    {n:"Укладання плитки 900×1800 мм",u:"м²/м.п.",p:2000},
+    {n:"Укладання плитки 800×800 мм",u:"м²/м.п.",p:1250},
+    {n:"Укладання плитки 800×1600 мм",u:"м²/м.п.",p:1700},
+    {n:"Укладання плитки 1000×1000 мм",u:"м²/м.п.",p:1600},
+    {n:"Укладання плитки кабанчик, під цеглу",u:"м²/м.п.",p:2500},
+    {n:"Укладання \"доски\" до 900 мм",u:"м²/м.п.",p:1350},
+    {n:"Укладання \"доски\" до 1200 мм",u:"м²/м.п.",p:1350},
+    {n:"Укладання \"доски\" до 1800 мм",u:"м²/м.п.",p:1800},
+    {n:"Укладання плитки по діагоналі, ялинкою, зі вставками та інше",u:"коеф.",p:1.3,isCoef:true},
+    {n:"Укладка керамограніта товщиною від 20-30 мм",u:"м²/м.п.",p:2250},
+    {n:"Укладка мозаїки, мозаїчні роботи",u:"м²/м.п.",p:2750},
   ]},
-  {s:"Укладання широкоформатної плитки",items:[
-    {n:"Підняття плитки великого формату",u:"поверх",p:[400,400]},
-    {n:"Укладання плитки 1200x1200 мм",u:"м²",p:[1200,1400]},
-    {n:"Укладання плитки 1500x750 мм",u:"м²",p:[1300,1500]},
-    {n:"Укладання плитки 1600x1600 мм",u:"м²",p:[1550,1700]},
-    {n:"Укладання плитки 1000x2000 мм",u:"м²",p:[1550,1800]},
-    {n:"Укладання плитки 1000x2500 мм",u:"м²",p:[1650,1900]},
-    {n:"Укладання плитки 1200x2400 мм",u:"м²",p:[1800,2200]},
-    {n:"Укладання плитки 1200x2600 мм",u:"м²",p:[1800,2300]},
-    {n:"Укладання плитки 1200x2800 мм",u:"м²",p:[1800,2450]},
-    {n:"Укладання плитки 1000x3000 мм",u:"м²",p:[2100,2600]},
-    {n:"Укладання плитки 1200x3200 мм",u:"м²",p:[2100,2650]},
-    {n:"Укладання плитки 1500x3000 мм",u:"м²",p:[2100,2800]},
-    {n:"Укладання плитки 1600x3200 мм",u:"м²",p:[2100,2900]},
-    {n:"Виготовлення душового піддону КФ без борту 900x900 мм",u:"шт.",p:[350,550]},
-    {n:"Виготовлення душового піддону КФ з бортом 900x900 мм",u:"шт.",p:[400,650]},
-    {n:"Поріз плит під 90° великого формату, шліфовка країв",u:"м.п.",p:[350,450]},
-    {n:"Заріз під 45° заусовка однієї сторони",u:"м.п.",p:[500,550]},
-    {n:"Виріз отвору в плиті великого формату",u:"шт.",p:[350,380]},
-    {n:"Складний виріз отвору прямокутний",u:"шт.",p:[1300,1400]},
-    {n:"Затирання швів епоксидною сумішшю",u:"м.п.",p:[250,300]},
+  {s:"УКЛАДАННЯ ШИРОКОФОРМАТНОЇ ПЛИТКИ",items:[
+    {n:"Підняття плитки великого формату",u:"поверх",p:500},
+    {n:"Укладання плитки 1200×1200 мм",u:"м²/м.п.",p:1700},
+    {n:"Укладання плитки 1500×750 мм",u:"м²/м.п.",p:1800},
+    {n:"Укладання плитки 1600×1600 мм",u:"м²/м.п.",p:2200},
+    {n:"Укладання плитки 1000×2000 мм",u:"м²/м.п.",p:2200},
+    {n:"Укладання плитки 1000×2500 мм",u:"м²/м.п.",p:2300},
+    {n:"Укладання плитки 1200×2400 мм",u:"м²/м.п.",p:2300},
+    {n:"Укладання плитки 1200×2600 мм",u:"м²/м.п.",p:2400},
+    {n:"Укладання плитки 1200×2800 мм",u:"м²/м.п.",p:2500},
+    {n:"Укладання плитки 1000×3000 мм",u:"м²/м.п.",p:2600},
+    {n:"Укладання плитки 1200×3200 мм",u:"м²/м.п.",p:2900},
+    {n:"Укладання плитки 1500×3000 мм",u:"м²/м.п.",p:3000},
+    {n:"Укладання плитки 1600×3200 мм",u:"м²/м.п.",p:3000},
+    {n:"Виготовлення душового піддону КФ без борту 900×900 мм - комплекс",u:"шт.",p:25000},
+    {n:"Виготовлення душового піддону КФ з бортом 900×900 мм - комплекс",u:"шт.",p:29000},
+    {n:"Поріз плит під 90° великого формату чистовий, шліфовка країв",u:"м.п.",p:450},
+    {n:"Заріз під 45° заусовка однієї сторони",u:"м.п.",p:550},
+    {n:"Виріз отвору в плиті великого формату",u:"шт.",p:400},
+    {n:"Складний виріз отвору (прямокутний)",u:"шт.",p:1500},
+    {n:"Затирання швів епоксидною сумішшю",u:"м.п.",p:350},
   ]},
 ];
-
-const OPS={
-  ak:{name:"Андрій Калинник",sub:"Вартість 1",idx:0,cls:"ak"},
-  xl:{name:"xlplitka.pro",sub:"Вартість 2",idx:1,cls:"xl"},
-};
+/*CAT_END*/
 
 const LOGO_SVG=`<div style="width:52px;height:52px;background:#111;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;padding:4px 5px;gap:0">
   <div style="color:#fff;font-family:Arial,sans-serif;font-size:18px;font-weight:900;letter-spacing:-1px;line-height:1">XL</div>
@@ -545,24 +573,25 @@ function _regItem(it){ _catItems.push(it); return _catItems.length-1; }
 function _addByIdx(idx){ addItem(_catItems[idx]); }
 function _addByIdxWithPrice(idx, priceVal){ addItemWithPrice(_catItems[idx], priceVal); }
 // ── STATE ──
-let currentOp=null, pendingOp=null;
 let zones=[], items=[], activeZone=null;
 let currentSmetaId=null, idCnt=1, autoSaveTimer=null;
 let pendingCoefCat=null, pendingCoefZoneId=null;
 
 // ── STORAGE ──
 function loadHistory(){ try{return JSON.parse(localStorage.getItem('xlp_smety')||'[]');}catch(e){return[];} }
-function saveHistory(list){ localStorage.setItem('xlp_smety',JSON.stringify(list)); }
+function saveHistory(list){ try{ localStorage.setItem('xlp_smety',JSON.stringify(list)); }catch(e){ console.error('saveHistory failed:',e); alert('Не вдалося зберегти: сховище переповнене або заблоковане браузером (приватний режим?).'); } }
 function saveCurrent(){
   if(!currentSmetaId) return;
-  const list=loadHistory();
-  const idx=list.findIndex(s=>s.id===currentSmetaId);
-  const client=document.getElementById('clientName').value||'';
-  const obj=document.getElementById('clientObj').value||'';
-  const total=Math.round(calcTotal());
-  const record={id:currentSmetaId,client,obj,op:currentOp,total,zones:[...zones],items:JSON.parse(JSON.stringify(items)),idCnt,updatedAt:new Date().toISOString(),createdAt:idx>=0?list[idx].createdAt:new Date().toISOString()};
-  if(idx>=0) list[idx]=record; else list.unshift(record);
-  saveHistory(list);
+  try{
+    const list=loadHistory();
+    const idx=list.findIndex(s=>s.id===currentSmetaId);
+    const client=document.getElementById('clientName').value||'';
+    const obj=document.getElementById('clientObj').value||'';
+    let total=0; try{ total=Math.round(calcTotal()); }catch(e){ total=0; }
+    const record={id:currentSmetaId,client,obj,total,zones:JSON.parse(JSON.stringify(zones)),items:JSON.parse(JSON.stringify(items)),idCnt,updatedAt:new Date().toISOString(),createdAt:idx>=0?list[idx].createdAt:new Date().toISOString()};
+    if(idx>=0) list[idx]=record; else list.unshift(record);
+    saveHistory(list);
+  }catch(e){ console.error('saveCurrent failed:',e); }
 }
 function autoSave(){
   clearTimeout(autoSaveTimer);
@@ -586,11 +615,11 @@ function coefMult(it){
   if(it.isCoef) return 1;
   return items.filter(c=>c.isCoef&&c.zoneId===it.zoneId&&c.affects&&c.affects.includes(it.id)).reduce((a,c)=>a*c.p,1);
 }
-// Прайсова ціна з CAT для поточного оператора
+// Прайсова ціна з CAT
 function catalogPrice(it){
   if(it.custom||it.isCoef||it.needsPrice) return it.p;
   const f=findCatalogItem(it.n);
-  return (f&&currentOp)?f.p[OPS[currentOp].idx]:it.p;
+  return f?f.p:it.p;
 }
 // Ціна що показується клієнту (зі знижкою якщо є)
 function displayPrice(it){ return (it.discount!==undefined&&it.discount!==null)?it.discount:it.p; }
@@ -610,40 +639,91 @@ function clientPrice(it){ return displayPrice(it); }
 function renderHome(){
   const list=loadHistory();
   const box=document.getElementById('home-list');
-  const empty=document.getElementById('home-empty');
-  if(!list.length){empty.style.display='block';box.innerHTML='';box.appendChild(empty);return;}
-  empty.style.display='none';
+  if(!list.length){
+    box.innerHTML='<div class="home-empty" id="home-empty">Кошторисів ще немає.<br>Натисніть «+ Новий кошторис»</div>';
+    return;
+  }
   box.innerHTML=list.map(s=>{
-    const date=new Date(s.updatedAt).toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric'});
-    const opCls=s.op||'';const opName=s.op?OPS[s.op].name:'—';
-    const zoneNames=s.zones.map(z=>z.name).join(', ')||'—';
+    const zns=Array.isArray(s.zones)?s.zones:[];
+    const total=typeof s.total==='number'?s.total:0;
+    const date=new Date(s.updatedAt||s.createdAt||Date.now()).toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const zoneNames=zns.map(z=>z.name).join(', ')||'—';
     return `<div class="smeta-card" onclick="openSmeta('${s.id}')">
-      <div class="sc-top"><div><div class="sc-name">${s.client||'Без імені'}</div><div class="sc-obj">${s.obj||'Об\'єкт не вказано'}</div></div><span class="sc-total">${s.total.toLocaleString('uk')} грн</span></div>
-      <div class="sc-meta"><span class="sc-op ${opCls}">${opName}</span><span class="sc-date">${date}</span><button class="sc-del" onclick="event.stopPropagation();deleteSmeta('${s.id}')">&#215;</button></div>
+      <div class="sc-top"><div><div class="sc-name">${s.client||'Без імені'}</div><div class="sc-obj">${s.obj||'Об\'єкт не вказано'}</div></div><span class="sc-total">${total.toLocaleString('uk')} грн</span></div>
+      <div class="sc-meta"><span class="sc-date">${date}</span><button class="sc-del" onclick="event.stopPropagation();deleteSmeta('${s.id}')">&#215;</button></div>
       <div class="sc-zones">&#128205; ${zoneNames}</div>
     </div>`;
   }).join('');
 }
 function deleteSmeta(id){ if(!confirm('Видалити кошторис?'))return; saveHistory(loadHistory().filter(s=>s.id!==id)); renderHome(); }
 
+// ── РЕЗЕРВНА КОПІЯ / ВІДНОВЛЕННЯ ──
+// Дані (кошториси, прайс) зберігаються в localStorage браузера, а він для
+// локальних HTML-файлів прив'язаний саме до цього файлу за його точним шляхом.
+// Якщо файл перевідкрити з іншого місця (нове завантаження, копія з іншою
+// назвою тощо) — це вже інше сховище, і кошториси "зникають". Резервна копія
+// у вигляді .json дозволяє перенести дані в будь-яку копію калькулятора.
+function exportBackup(){
+  const smety = loadHistory();
+  if(!smety.length){ alert('Поки немає жодного збереженого кошторису для копії.'); return; }
+  const data = {
+    kind: 'xlplitka_backup',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    smety
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,10);
+  a.download = `xlplitka_backup_${stamp}.json`;
+  a.href = url;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url); a.remove();}, 1000);
+}
+function importBackupFile(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    let data;
+    try{ data = JSON.parse(e.target.result); }
+    catch(err){ alert('Не вдалося прочитати файл — це не схоже на резервну копію (.json).'); input.value=''; return; }
+    if(!data || !Array.isArray(data.smety)){
+      alert('Файл не схожий на резервну копію калькулятора xlplitka.');
+      input.value=''; return;
+    }
+    const existing = loadHistory();
+    const merged = existing.slice();
+    let added = 0, updated = 0;
+    for(const rec of data.smety){
+      if(!rec || !rec.id) continue;
+      const idx = merged.findIndex(s=>s.id===rec.id);
+      if(idx>=0){ merged[idx]=rec; updated++; } else { merged.push(rec); added++; }
+    }
+    merged.sort((a,b)=> new Date(b.updatedAt||b.createdAt||0) - new Date(a.updatedAt||a.createdAt||0));
+    saveHistory(merged);
+    renderHome();
+    alert(`Відновлено з резервної копії.\nДодано нових: ${added}\nОновлено існуючих: ${updated}`);
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
 // ── NEW / OPEN ──
 function newSmeta(){
-  currentSmetaId='xlp_'+Date.now(); currentOp=null; pendingOp=null;
+  currentSmetaId='xlp_'+Date.now();
   zones=[]; items=[]; activeZone=null; idCnt=1;
   document.getElementById('clientName').value='';
   document.getElementById('clientObj').value='';
   document.getElementById('autosave-status').textContent='';
   showScreen('editor');
   renderZoneTabs(); renderCatalog(); renderSummary(); updateCustomBtn(); updateBadge();
-  document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('modal-confirm').disabled=true;
-  document.getElementById('modal-cancel').style.display='none';
-  document.getElementById('modal').classList.add('open');
 }
 function openSmeta(id){
   const s=loadHistory().find(x=>x.id===id);
   if(!s) return;
-  currentSmetaId=id; currentOp=s.op; zones=s.zones||[]; idCnt=s.idCnt||1;
+  currentSmetaId=id; zones=s.zones||[]; idCnt=s.idCnt||1;
   // Міграція: clientP → discount
   items=(s.items||[]).map(it=>{
     if(it.clientP!==undefined&&it.clientP!==null){ it.discount=it.clientP; delete it.clientP; }
@@ -653,7 +733,7 @@ function openSmeta(id){
   document.getElementById('clientName').value=s.client||'';
   document.getElementById('clientObj').value=s.obj||'';
   document.getElementById('autosave-status').textContent='';
-  showScreen('editor'); updateOpPill();
+  showScreen('editor');
   renderZoneTabs(); renderCatalog(); renderSummary(); updateCustomBtn(); updateBadge();
 }
 function goHome(){ saveCurrent(); showScreen('home'); renderHome(); }
@@ -663,39 +743,6 @@ function updateEditorTitle(){ document.getElementById('editor-title').textConten
 function showScreen(name){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('screen-'+name).classList.add('active'); }
 function showEPage(name){ document.querySelectorAll('.epage').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active')); document.getElementById('ep-'+name).classList.add('active'); document.getElementById('etab-'+name).classList.add('active'); }
 
-// ── OPERATOR ──
-function selectOp(op){ pendingOp=op; document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected')); document.getElementById('ob-'+op).classList.add('selected'); document.getElementById('modal-confirm').disabled=false; }
-function confirmOp(){
-  if(!pendingOp) return;
-  const prev=currentOp; currentOp=pendingOp;
-  document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-cancel').style.display='';
-  updateOpPill();
-  if(prev&&prev!==currentOp&&items.length){
-    for(const it of items){
-      if(it.custom||it.isCoef||it.needsPrice) continue;
-      const f=findCatalogItem(it.n);
-      if(f) it.p=f.p[OPS[currentOp].idx]; // discount НЕ чіпаємо
-    }
-    renderSummary();
-  }
-  renderCatalog(); autoSave();
-}
-function closeModal(){ if(!currentOp)return; document.getElementById('modal').classList.remove('open'); }
-function openOpModal(){
-  pendingOp=currentOp; document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('selected'));
-  if(currentOp) document.getElementById('ob-'+currentOp).classList.add('selected');
-  document.getElementById('modal-confirm').disabled=!currentOp;
-  document.getElementById('modal-cancel').style.display='';
-  document.getElementById('modal').classList.add('open');
-}
-function updateOpPill(){
-  if(!currentOp) return;
-  const o=OPS[currentOp];
-  document.getElementById('op-dot').className='op-dot '+o.cls;
-  document.getElementById('op-label').textContent=o.name;
-  document.getElementById('editor-title').textContent=document.getElementById('clientName').value||'Новий кошторис';
-}
 function findCatalogItem(name){ for(const sec of CAT) for(const it of sec.items) if(it.n===name) return it; return null; }
 
 // ── ZONES ──
@@ -724,16 +771,14 @@ function renderCatalog(){
   _catItems=[];
   const q=document.getElementById('search').value.toLowerCase().trim();
   const box=document.getElementById('catalog');
-  if(!currentOp){box.innerHTML='<div style="padding:24px;text-align:center;color:#ccc;font-size:13px">Оберіть оператора</div>';return;}
   const hasZone=!!activeZone;
-  const idx=OPS[currentOp].idx, other=idx===0?1:0;
   let html='';
   for(const sec of CAT){
     const filtered=sec.items.filter(i=>!q||i.n.toLowerCase().includes(q));
     if(!filtered.length) continue;
     html+=`<div class="sec-head">${sec.s}</div>`;
     for(const it of filtered){
-      const pr=it.p[idx], pr2=it.p[other];
+      const pr=it.p;
       let priceHtml='';
       if(it.needsPrice){
         const uid='ci_'+it.n.replace(/\W/g,'');
@@ -741,7 +786,7 @@ function renderCatalog(){
       } else if(it.isCoef){
         priceHtml=`<span class="iprice" style="color:#6637c4">×${pr}</span>`;
       } else {
-        priceHtml=`<span class="iprice">${pr.toLocaleString('uk')} грн</span>${pr2!==pr?`<span class="iprice2">${pr2.toLocaleString('uk')} грн</span>`:''}`;
+        priceHtml=`<span class="iprice">${pr.toLocaleString('uk')} грн</span>`;
       }
       const addCls=`iadd${hasZone?'':' no-zone'}${it.isCoef?' iadd-coef':''}`;
       const label=it.isCoef?'Обрати':'+ Додати';
@@ -761,16 +806,14 @@ function renderCatalog(){
 
 // ── ITEMS ──
 function addItem(it){
-  if(!currentOp){openOpModal();return;}
   if(!activeZone){alert('Оберіть ділянку');return;}
   if(it.isCoef){ pendingCoefCat=it; pendingCoefZoneId=activeZone; openCoefModal(); return; }
-  const price=it.p[OPS[currentOp].idx];
+  const price=it.p;
   const ex=items.find(i=>i.zoneId===activeZone&&i.n===it.n&&!i.isCoef);
   if(ex){ex.qty++;} else {items.push({id:idCnt++,zoneId:activeZone,n:it.n,u:it.u,p:price,qty:1,custom:false,isCoef:false});}
   updateBadge(); renderSummary(); autoSave();
 }
 function addItemWithPrice(it,priceVal){
-  if(!currentOp){openOpModal();return;}
   if(!activeZone){alert('Оберіть ділянку');return;}
   const price=parseFloat(priceVal)||0;
   if(!price){alert('Вкажіть ціну');return;}
@@ -812,7 +855,7 @@ function updateBadge(){
 function openCoefModal(){
   const zoneItems=items.filter(i=>i.zoneId===pendingCoefZoneId&&!i.isCoef);
   if(!zoneItems.length){ alert('Спочатку додайте роботи до ділянки, потім застосуйте коефіцієнт.'); pendingCoefCat=null; pendingCoefZoneId=null; return; }
-  const coefVal=pendingCoefCat.p[OPS[currentOp].idx];
+  const coefVal=pendingCoefCat.p;
   const zoneName=zones.find(z=>z.id===pendingCoefZoneId)?.name||'';
   document.getElementById('coef-title').textContent=`${pendingCoefCat.n} — ×${coefVal}`;
   document.getElementById('coef-sub').textContent=`Ділянка: ${zoneName}. Оберіть позиції, на які множиться цей коефіцієнт.`;
@@ -828,7 +871,7 @@ function closeCoefModal(){ document.getElementById('coef-modal').classList.remov
 function confirmCoef(){
   const checked=[...document.querySelectorAll('#coef-list .coef-cb:checked')].map(cb=>parseInt(cb.dataset.id));
   if(!checked.length){alert('Оберіть хоча б одну позицію');return;}
-  const coefVal=pendingCoefCat.p[OPS[currentOp].idx];
+  const coefVal=pendingCoefCat.p;
   const existing=items.find(i=>i.isCoef&&i.zoneId===pendingCoefZoneId&&i.n===pendingCoefCat.n);
   if(existing){ existing.affects=[...new Set([...(existing.affects||[]),...checked])]; }
   else { items.push({id:idCnt++,zoneId:pendingCoefZoneId,n:pendingCoefCat.n,u:'коеф.',p:coefVal,qty:1,custom:false,isCoef:true,affects:checked}); }
@@ -879,7 +922,6 @@ function downloadSmeta(){
   const client = document.getElementById('clientName').value||'—';
   const obj    = document.getElementById('clientObj').value||'—';
   const date   = new Date().toLocaleDateString('uk-UA');
-  const opName = currentOp ? OPS[currentOp].name : '—';
   const allNorm = items.filter(i=>!i.isCoef);
 
   // ── Розбивка по ділянках (компактна, тільки читання) ──
@@ -891,20 +933,16 @@ function downloadSmeta(){
     const zTotal = zNorm.reduce((a,i)=>a+rowSum(i),0);
     zoneRows += `<tr class="zone-row"><td colspan="6">${escHtml(z.name)}</td></tr>`;
     for(const s of zNorm){
-      const dp     = displayPrice(s);
-      const hasD   = Math.abs(dp - s.p) > 0.01;
-      const eff    = rowSum(s);
+      const fp   = displayPrice(s);
+      const eff  = rowSum(s);
       const myCoefs = zCoefs.filter(c=>c.affects&&c.affects.includes(s.id));
       const coefNote = myCoefs.length ? ` <span class="ctag">×${myCoefs.map(c=>c.p).join('×')}</span>` : '';
-      const priceCell = hasD
-        ? `<div class="dl-price-disc"><span class="dl-client">${Math.round(dp).toLocaleString('uk')}</span><span class="dl-orig">${Math.round(s.p).toLocaleString('uk')}</span></div>`
-        : `${Math.round(dp).toLocaleString('uk')}`;
       zoneRows += `<tr class="zone-item-row">
         <td class="num">${rowNum++}</td>
         <td>${escHtml(s.n)}${coefNote}</td>
         <td class="unit">${escHtml(s.u)}</td>
         <td class="right">${Number(s.qty).toLocaleString('uk')}</td>
-        <td class="right">${priceCell}</td>
+        <td class="right">${Math.round(fp).toLocaleString('uk')}</td>
         <td class="right strong">${Math.round(eff).toLocaleString('uk')}</td>
       </tr>`;
     }
@@ -920,33 +958,28 @@ function downloadSmeta(){
     const key = it.n+'|'+it.u;
     if(consMap.has(key)){
       const e=consMap.get(key); e.qty+=it.qty; e.total+=rowSum(it);
-      e.dp=displayPrice(it); e.catP=it.p;
     } else {
-      consMap.set(key,{n:it.n,u:it.u,catP:it.p,dp:displayPrice(it),qty:it.qty,total:rowSum(it)});
+      consMap.set(key,{n:it.n,u:it.u,fp:displayPrice(it),qty:it.qty,total:rowSum(it)});
     }
   }
   let consNum=1, consRows='';
   for(const c of consMap.values()){
-    const hasD = Math.abs(c.dp - c.catP) > 0.01;
-    const priceCell = hasD
-      ? `<div class="dl-price-disc"><span class="dl-client">${Math.round(c.dp).toLocaleString('uk')}</span><span class="dl-orig">${Math.round(c.catP).toLocaleString('uk')}</span></div>`
-      : `${Math.round(c.dp).toLocaleString('uk')}`;
     consRows += `<tr>
       <td class="num">${consNum++}</td>
       <td>${escHtml(c.n)}</td>
       <td class="unit">${escHtml(c.u)}</td>
       <td class="right">${Number(c.qty).toLocaleString('uk')}</td>
-      <td class="right">${priceCell}</td>
+      <td class="right">${Math.round(c.fp).toLocaleString('uk')}</td>
       <td class="right strong">${Math.round(c.total).toLocaleString('uk')}</td>
     </tr>`;
   }
 
-  // ── Знижка ──
+  // ── Підсумок ──
   let origTotal=0, clientTotal=0;
   for(const it of allNorm){
     const m = coefMult(it);
     origTotal   += it.p * it.qty * m;
-    clientTotal += displayPrice(it) * it.qty * m;
+    clientTotal += rowSum(it);
   }
   const discount = origTotal - clientTotal;
   const hasDiscount = discount > 0.5;
@@ -1025,7 +1058,6 @@ td{padding:7px 9px}
   <div class="meta">
     <div><span>Клієнт</span>${escHtml(client)}</div>
     <div><span>Об'єкт / адреса</span>${escHtml(obj)}</div>
-    <div><span>Оператор</span>${escHtml(opName)}</div>
     <div><span>Дата</span>${escHtml(date)}</div>
   </div>
 
@@ -1084,7 +1116,6 @@ function renderPreview(){
   const client = document.getElementById('clientName').value || '—';
   const obj    = document.getElementById('clientObj').value || '—';
   const date   = new Date().toLocaleDateString('uk-UA');
-  const opName = currentOp ? OPS[currentOp].name : '—';
 
   let html = '';
 
@@ -1092,7 +1123,6 @@ function renderPreview(){
   html += `<div class="preview-meta">
     <div class="preview-meta-item"><span>Клієнт</span><div>${esc(client)}</div></div>
     <div class="preview-meta-item"><span>Об'єкт / адреса</span><div>${esc(obj)}</div></div>
-    <div class="preview-meta-item"><span>Оператор</span><div>${esc(opName)}</div></div>
     <div class="preview-meta-item"><span>Дата</span><div>${esc(date)}</div></div>
   </div>`;
 
@@ -1133,21 +1163,26 @@ function buildZonesTable(forDownload){
     html += `<tr class="tr-zone"><td colspan="6">${esc(z.name)}</td></tr>`;
 
     for(const s of zNorm){
-      const eff = effectiveSum(s);
+      const eff = rowSum(s);
       const myCoefs = zCoefs.filter(c => c.affects && c.affects.includes(s.id));
       const coefNote = myCoefs.length ? ` <span class="ctag">×${myCoefs.map(c=>c.p).join('×')}</span>` : '';
       const dp = displayPrice(s);
       const hasD = Math.abs(dp - s.p) > 0.01;
-      const priceCell = hasD
-        ? `<div class="zone-price-discounted"><span class="zone-price-client">${Math.round(dp).toLocaleString('uk')}</span><span class="zone-price-orig-strike">${Math.round(s.p).toLocaleString('uk')}</span></div>`
-        : `<span class="zone-price-plain">${Math.round(s.p).toLocaleString('uk')}</span>`;
+
+      let priceCell;
+      if(hasD){
+        priceCell = `<div class="zone-price-discounted"><span class="zone-price-client">${Math.round(dp).toLocaleString('uk')}</span><span class="zone-price-orig-strike">${Math.round(s.p).toLocaleString('uk')}</span></div>`;
+      } else {
+        priceCell = `<span class="zone-price-plain">${Math.round(s.p).toLocaleString('uk')}</span>`;
+      }
+
       html += `<tr>
         <td class="td-num">${rowNum++}</td>
         <td>${esc(s.n)}${coefNote}</td>
         <td class="td-unit">${esc(s.u)}</td>
         <td class="td-right">${Number(s.qty).toLocaleString('uk')}</td>
         <td class="td-right" id="zprice_${s.id}">${priceCell}</td>
-        <td class="td-sum" id="psum_z_${s.id}">${Math.round(rowSum(s)).toLocaleString('uk')}</td>
+        <td class="td-sum" id="psum_z_${s.id}">${Math.round(eff).toLocaleString('uk')}</td>
       </tr>`;
     }
     for(const c of zCoefs){
@@ -1161,7 +1196,6 @@ function buildZonesTable(forDownload){
 }
 
 function buildConsolidatedTable(){
-  // Group by name+price+unit
   const consMap = new Map();
   for(const it of items.filter(i => !i.isCoef)){
     const key = it.n + '|' + it.u;
@@ -1169,11 +1203,10 @@ function buildConsolidatedTable(){
       const e = consMap.get(key);
       e.qty += it.qty;
       e.ids.push(it.id);
-      // price might differ per zone if edited — we use current item.p
-      e.total += effectiveSum(it);
-      e.p = it.p; // last known price (for input)
+      e.total += rowSum(it);
+      e.p = it.p;
     } else {
-      consMap.set(key, {n:it.n, u:it.u, p:it.p, qty:it.qty, total:effectiveSum(it), ids:[it.id]});
+      consMap.set(key, {n:it.n, u:it.u, p:it.p, qty:it.qty, total:rowSum(it), ids:[it.id]});
     }
   }
 
@@ -1187,26 +1220,26 @@ function buildConsolidatedTable(){
 
   let num = 1;
   for(const [key, c] of consMap){
-    // The price input here affects ALL items with same name
     const firstItem = items.find(i=>i.id===c.ids[0]);
     const catP = firstItem ? firstItem.p : c.p;
-    const dp = firstItem ? displayPrice(firstItem) : c.p;
-    const hasD = Math.abs(dp - catP) > 0.01;
+    const dp   = firstItem ? displayPrice(firstItem) : c.p;
     const consTotal = c.ids.reduce((a,id)=>{ const it=items.find(i=>i.id===id); return a+(it?rowSum(it):0); },0);
-    c.total = consTotal;
+
+    const hasD = Math.abs(dp - catP) > 0.01;
     const priceCell = `<div class="price-cell">
-      <div class="price-orig${hasD?' visible':''}">${Math.round(catP).toLocaleString('uk')}</div>
-      <input class="price-input${hasD?' changed':''}" data-ids="${c.ids.join(',')}" data-orig="${catP}" data-table="cons"
-        value="${Math.round(dp)}" type="number" min="0"
-        oninput="onPriceInputCons(this)" onchange="onPriceChangeCons(this)"/>
-    </div>`;
+        <div class="price-orig${hasD?' visible':''}">${Math.round(catP).toLocaleString('uk')}</div>
+        <input class="price-input${hasD?' changed':''}" data-ids="${c.ids.join(',')}" data-orig="${catP}" data-table="cons"
+          value="${Math.round(dp)}" type="number" min="0"
+          oninput="onPriceInputCons(this)" onchange="onPriceChangeCons(this)"/>
+      </div>`;
+
     html += `<tr>
       <td class="td-num">${num++}</td>
       <td>${esc(c.n)}</td>
       <td class="td-unit">${esc(c.u)}</td>
       <td class="td-right">${Number(c.qty).toLocaleString('uk')}</td>
       <td class="td-right">${priceCell}</td>
-      <td class="td-sum" id="psum_c_${esc(key)}">${Math.round(c.total).toLocaleString('uk')}</td>
+      <td class="td-sum">${Math.round(consTotal).toLocaleString('uk')}</td>
     </tr>`;
   }
   html += '</tbody></table>';
@@ -1337,23 +1370,21 @@ function recalcPreview(){
   let origTotal=0, clientTotal=0;
   for(const it of allNorm){
     const m = coefMult(it);
-    origTotal   += it.p * it.qty * m;           // завжди прайс
-    clientTotal += displayPrice(it) * it.qty * m; // зі знижкою якщо є
+    origTotal   += it.p * it.qty * m;
+    clientTotal += rowSum(it);
   }
+
   const discount = origTotal - clientTotal;
   const hasDiscount = discount > 0.5;
 
-  // Grand total
   const grandBox = document.getElementById('preview-grand-box');
   const grandVal = document.getElementById('preview-grand-val');
   if(grandVal) grandVal.textContent = Math.round(clientTotal).toLocaleString('uk')+' грн';
   if(grandBox) grandBox.classList.toggle('has-discount', hasDiscount);
 
-  // Editor total
   const tot = document.getElementById('total');
-  if(tot) tot.textContent = Math.round(clientTotal).toLocaleString('uk')+' грн';
+  if(tot) tot.textContent = Math.round(items.filter(i=>!i.isCoef).reduce((a,i)=>a+rowSum(i),0)).toLocaleString('uk')+' грн';
 
-  // Discount block
   const discBlock = document.getElementById('preview-discount-block');
   if(discBlock){
     if(hasDiscount){
@@ -1370,6 +1401,145 @@ function recalcPreview(){
 }
 
 function esc(v){ return String(v??'').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
+
+// ══════════════════════════════════════════
+// EXCEL EXPORT
+// ══════════════════════════════════════════
+
+// Будує один worksheet з даними кошторису
+// priceGetter(item) → числова ціна за одиницю
+// sheetTitle → рядок у шапці (назва виконавця)
+function _buildSheet(priceGetter, sheetTitle){
+  const client = document.getElementById('clientName').value || '—';
+  const obj    = document.getElementById('clientObj').value || '—';
+  const date   = new Date().toLocaleDateString('uk-UA');
+
+  const COL_HEADERS = ['#', 'Найменування робіт', 'Од.', 'К-сть', 'Ціна, грн', 'Сума, грн'];
+  const FONT = 'Times New Roman';
+
+  const aoa = [];
+
+  // ── Шапка в одну комірку ──
+  const headerText = `${sheetTitle}  |  Клієнт: ${client}  |  Об'єкт: ${obj}  |  Дата: ${date}`;
+  aoa.push([headerText, '', '', '', '', '']);
+  aoa.push([]); // порожній рядок
+
+  // ── Розбивка по ділянках ──
+  aoa.push(['РОЗБИВКА ПО ДІЛЯНКАХ', '', '', '', '', '']);
+  aoa.push(COL_HEADERS);
+
+  let rowNum = 1;
+  const zoneGroups = [];
+
+  for(const z of zones){
+    const zNorm  = items.filter(i => i.zoneId === z.id && !i.isCoef);
+    const zCoefs = items.filter(i => i.zoneId === z.id && i.isCoef);
+    if(!zNorm.length) continue;
+
+    aoa.push([z.name, '', '', '', '', '']);
+
+    const itemExcelRows = [];
+    for(const s of zNorm){
+      aoa.push([null, null, null, null, null, null]);
+      const excelRow = aoa.length;
+      itemExcelRows.push({ excelRow, item: s });
+      const row = aoa[excelRow - 1];
+      row[0] = rowNum++;
+      row[1] = s.n;
+      row[2] = s.u;
+      row[3] = s.qty;
+      row[4] = Math.round(priceGetter(s));
+      row[5] = { f: `E${excelRow}*D${excelRow}*${coefMult(s)}` };
+    }
+
+    for(const c of zCoefs){
+      aoa.push([`  Коеф.: ${c.n}`, '', '', '', '', `×${c.p}`]);
+    }
+
+    // Підсумок ділянки
+    aoa.push([null, null, null, null, null, null]);
+    const zTotalRow = aoa.length;
+    const sumF = itemExcelRows.map(r => `F${r.excelRow}`).join('+');
+    aoa[zTotalRow - 1] = [
+      `Разом по ділянці «${z.name}»`, '', '', '', '',
+      itemExcelRows.length ? { f: sumF } : 0
+    ];
+    zoneGroups.push({ itemExcelRows, zTotalRow });
+  }
+
+  aoa.push([]);
+
+  // ── Зведені показники ──
+  aoa.push(['ЗВЕДЕНІ ПОКАЗНИКИ ПО ОБ\'ЄКТУ', '', '', '', '', '']);
+  aoa.push(COL_HEADERS);
+
+  const consMap = new Map();
+  for(const it of items.filter(i => !i.isCoef)){
+    const key = it.n + '|' + it.u;
+    if(consMap.has(key)){
+      const e = consMap.get(key);
+      e.qty += it.qty;
+      e.price = priceGetter(it);
+    } else {
+      consMap.set(key, { n: it.n, u: it.u, price: priceGetter(it), qty: it.qty });
+    }
+  }
+
+  let consNum = 1;
+  const consItemRows = [];
+  for(const c of consMap.values()){
+    aoa.push([null, null, null, null, null, null]);
+    const excelRow = aoa.length;
+    consItemRows.push(excelRow);
+    const row = aoa[excelRow - 1];
+    row[0] = consNum++;
+    row[1] = c.n;
+    row[2] = c.u;
+    row[3] = c.qty;
+    row[4] = Math.round(c.price);
+    row[5] = { f: `E${excelRow}*D${excelRow}` };
+  }
+
+  // Загальна сума
+  aoa.push([]);
+  const grandSumF = consItemRows.map(r => `F${r}`).join('+');
+  aoa.push([
+    'ЗАГАЛЬНА СУМА', '', '', '', '',
+    consItemRows.length ? { f: grandSumF } : 0
+  ]);
+
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [
+    { wch: 5 },
+    { wch: 50 },
+    { wch: 7 },
+    { wch: 8 },
+    { wch: 14 },
+    { wch: 16 },
+  ];
+
+  // Merge шапки (A1:F1)
+  ws['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:5} }];
+
+  return ws;
+}
+
+function downloadExcel(){
+  if(!items.filter(i=>!i.isCoef).length){ alert('Кошторис порожній'); return; }
+  if(typeof XLSX === 'undefined'){ alert('Бібліотека Excel ще завантажується, спробуй ще раз'); return; }
+
+  const client = document.getElementById('clientName').value || '—';
+  const date   = new Date().toLocaleDateString('uk-UA');
+  const wb = XLSX.utils.book_new();
+
+  // Ціна = поточна ціна позиції в кошторисі (з урахуванням знижки, якщо є)
+  const ws = _buildSheet(it => displayPrice(it), 'xlplitka.pro');
+  XLSX.utils.book_append_sheet(wb, ws, 'xlplitka.pro');
+
+  const safeName = (client !== '—' ? client : 'Кошторис').replace(/[^\wА-яа-яІіЄєЇїҐґ\s]/g,'').trim();
+  const fileName = `xlplitka_${safeName}_${date.replace(/\./g,'-')}.xlsx`;
+  XLSX.writeFile(wb, fileName);
+}
 
 // ── INIT ──
 renderHome();
